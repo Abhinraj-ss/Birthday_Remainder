@@ -11,7 +11,7 @@ import java.util.ArrayList
 
 class HomeRecyclerAdapter(val context: Context, val itemList: ArrayList<String>):RecyclerView.Adapter<HomeRecyclerAdapter.HomeViewHolder>() {
     class HomeViewHolder(view:View):RecyclerView.ViewHolder(view){
-        val textView:TextView= view.findViewById(R.id.text_home_row)
+        val textView:TextView= view.findViewById(R.id.txtAge)
 
 
     }
