@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,10 +18,12 @@ import com.abhinraj.birthdayremainder.R
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var progressBar: ProgressBar
+    private lateinit var rlLoading: RelativeLayout
     lateinit var recyclerHome: RecyclerView
     lateinit var layoutManager: LinearLayoutManager
-    val list= arrayListOf<String>("1","2","3","4","5","6","7","8","9","10")
-    lateinit var recyclerAdapter: HomeRecyclerAdapter
+    private val list= arrayListOf<String>("AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE")
+    private lateinit var recyclerAdapter: HomeRecyclerAdapter
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -32,6 +36,9 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+        progressBar = root?.findViewById(R.id.progressBar) as ProgressBar
+        rlLoading = root.findViewById(R.id.rlLoading) as RelativeLayout
+        rlLoading.visibility = View.VISIBLE
         recyclerHome= root.findViewById(R.id.recycler_home)
         layoutManager= LinearLayoutManager(activity)
         recyclerAdapter= HomeRecyclerAdapter(activity as Context,list)

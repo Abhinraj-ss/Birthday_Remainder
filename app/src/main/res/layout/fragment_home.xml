@@ -24,9 +24,8 @@
             android:id="@+id/recycler_home"
             android:layout_below="@id/text_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="10dp" />
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlLoading"

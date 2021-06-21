@@ -1,4 +1,4 @@
-package com.abhinraj.birthdayremainder.ui.gallery
+package com.abhinraj.birthdayremainder.ui.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
