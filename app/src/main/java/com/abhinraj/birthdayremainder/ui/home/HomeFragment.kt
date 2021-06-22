@@ -39,6 +39,7 @@ class HomeFragment : Fragment() {
         progressBar = root?.findViewById(R.id.progressBar) as ProgressBar
         rlLoading = root.findViewById(R.id.rlLoading) as RelativeLayout
         rlLoading.visibility = View.VISIBLE
+        progressBar.visibility = View.INVISIBLE
         recyclerHome= root.findViewById(R.id.recycler_home)
         layoutManager= LinearLayoutManager(activity)
         recyclerAdapter= HomeRecyclerAdapter(activity as Context,list)

@@ -44,9 +44,10 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="enter_name">Enter Name</string>
     <string name="add">ADD</string>
-    <string name="dob">DOB</string>
+    <string name="dob">DOB(dd/mm/yyyy)</string>
     <string name="mins_or_hours_or_days_or_weeks">mins or hours or days or weeks</string>
     <string name="notify_me_before">Notify me before</string>
+    <string name="gender">Gender :</string>
     <string-array name="time_array">
         <item>Select</item>
         <item>Minutes</item>
@@ -55,7 +56,7 @@
         <item>Weeks</item>
     </string-array>
     <string-array name="gender">
-        <item>Gender</item>
+        <item>Select</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
