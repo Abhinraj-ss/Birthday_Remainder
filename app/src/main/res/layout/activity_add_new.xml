@@ -80,7 +80,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginEnd="4dp"
-                    android:background="@drawable/wyt_border"
                     android:textColor="@color/white"
                     android:layout_marginTop="6dp"
                     android:padding="6dp"/>
@@ -104,8 +103,11 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
+                android:background="@drawable/wyt_border"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="10dp"
                 android:layout_centerHorizontal="true"
-                android:paddingTop="30dp"/>
+                android:layout_marginTop="30dp"/>
             <EditText
                 android:id="@+id/etNotify"
                 android:layout_width="match_parent"

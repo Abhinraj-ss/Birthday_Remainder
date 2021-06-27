@@ -66,7 +66,7 @@ class AddNewActivity : AppCompatActivity() {
             Toast.LENGTH_SHORT
         ).show()
 
-
+/*
         val spGender = findViewById<View>(R.id.spGender) as Spinner
         val adapter: ArrayAdapter<String> =
             ArrayAdapter<String>(this@AddNewActivity, android.R.layout.simple_spinner_item)
@@ -75,7 +75,7 @@ class AddNewActivity : AppCompatActivity() {
         spGender.setOnItemSelectedListener(this)
 
 
-
+*/
         btnAdd.setOnClickListener {
 
 
@@ -85,7 +85,7 @@ class AddNewActivity : AppCompatActivity() {
         }
     }
 
-    fun onItemSelected(arg0: AdapterView<*>?, arg1: View?, position: Int, id: Long) {
+  /*  fun onItemSelected(arg0: AdapterView<*>?, arg1: View?, position: Int, id: Long) {
         Toast.makeText(
             applicationContext,
             "Selected User: " + users.get(position),
@@ -94,8 +94,12 @@ class AddNewActivity : AppCompatActivity() {
     }
 
     fun onNothingSelected(arg0: AdapterView<*>?) {
-        // TODO - Custom Code
-    }
+       Toast.makeText(
+            this@AddNewActivity,
+            "Field cannot be empty",
+            Toast.LENGTH_SHORT
+        ).show()
+    }*/
 }
 
 

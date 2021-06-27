@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.abhinraj.birthdayremainder.R
 
-class GalleryFragment : Fragment() {
+class CalendarFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private lateinit var calendarViewModel: CalendarViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel::class.java)
+        calendarViewModel =
+                ViewModelProviders.of(this).get(CalendarViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_calendar, container, false)
         val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+        calendarViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
