@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.abhinraj.birthdayremainder.ui.login.LoginActivity
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -77,6 +78,7 @@ class AddNewActivity : AppCompatActivity() {
 
 */
         btnAdd.setOnClickListener {
+
 
 
             val intent = Intent(this, MainActivity::class.java)

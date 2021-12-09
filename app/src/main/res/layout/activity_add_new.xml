@@ -22,7 +22,7 @@
                 android:id="@+id/imgAlarm"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="45dp"
                 android:src="@drawable/ic_baseline_add_alarm_24"
                 android:layout_centerHorizontal="true"/>
 
@@ -58,7 +58,7 @@
                 android:maxLines="1"
                 android:ems="10"
                 android:hint="@string/dob"
-                android:inputType="datetime"
+                android:inputType="date"
                 android:padding="10dip"
                 android:singleLine="true"
                 android:textColor="@android:color/black"

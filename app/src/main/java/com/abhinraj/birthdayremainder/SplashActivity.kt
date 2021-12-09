@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.abhinraj.birthdayremainder.ui.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
     /*Array of permissions to be used in the app*/
@@ -21,7 +22,8 @@ class SplashActivity : AppCompatActivity() {
     }
     fun openNewActivity() {
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
+
         startActivity(intent)
         finish()
 
