@@ -1,6 +1,7 @@
 package com.abhinraj.birthdayremainder.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -11,12 +12,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.abhinraj.birthdayremainder.MainActivity
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
+import com.abhinraj.birthdayremainder.ui.details.DetailsActivity
+import com.abhinraj.birthdayremainder.ui.details.DetailsFragment
 import java.util.ArrayList
 
 class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthdays>):RecyclerView.Adapter<HomeRecyclerAdapter.UpBirthdaysViewHolder>() {
@@ -36,17 +41,23 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
 
 
         holder.cardBirthdays.setOnClickListener {
-            val fragment = HomeFragment()
-            val args = Bundle()
-            args.putInt("id", bdayObject.id)
-            args.putString("name", bdayObject.name)
+            /*val fragment = DetailsFragment()
+
+
             fragment.arguments = args
             val transaction = (context as FragmentActivity).supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame, fragment)
             transaction.commit()
-            (context as AppCompatActivity).supportActionBar?.title = holder.name.text.toString()
+            (context as AppCompatActivity).supportActionBar?.title = holder.name.text.toString()*/
+            val args = Bundle()
+            args.putInt("id", bdayObject.id)
+            args.putString("name", bdayObject.name)
+            val intent = Intent(context, DetailsActivity::class.java)
+            startActivity(context,intent,args)
         }
     }
+
+
 
     override fun getItemCount(): Int {
         return birthdays.size
