@@ -4,7 +4,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [BirthdayEntity::class], version = 1, exportSchema = false)
 abstract class BirthdayDatabase : RoomDatabase() {
 
-    abstract fun restaurantDao(): BirthdayDao
+    abstract fun birthdayDao(): BirthdayDao
 
 }
 

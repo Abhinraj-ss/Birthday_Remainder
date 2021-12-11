@@ -83,16 +83,17 @@
                     android:textColor="@color/white"
                     android:layout_marginTop="6dp"
                     android:padding="6dp"/>
+
                 <Spinner
+                    android:id="@+id/spGender"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/spGender"
-                    android:entries="@array/gender"
                     android:layout_marginStart="10dp"
-                    android:textAlignment="center"
-                    android:layout_toRightOf="@id/txtGender"
                     android:layout_marginTop="6dip"
-                    android:background="@drawable/_edit_text"/>
+                    android:layout_toRightOf="@id/txtGender"
+                    android:background="@drawable/_edit_text"
+                    android:entries="@array/gender"
+                    android:textAlignment="center" />
             </RelativeLayout>
             <TextView
                 android:layout_below="@id/rlGender"
@@ -107,36 +108,38 @@
                 android:paddingHorizontal="10dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"/>
-            <EditText
-                android:id="@+id/etNotify"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtNotify"
-                android:background="@drawable/_edit_text"
-                android:layout_marginStart="60dip"
-                android:layout_marginTop="10dip"
-                android:layout_marginEnd="60dp"
-                android:drawablePadding="3dp"
-                android:maxLines="1"
-                android:hint="@string/mins_or_hours_or_days_or_weeks"
-                android:inputType="numberSigned"
-                android:padding="10dip"
-                android:textAlignment="center"
-                android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
-            <Spinner
-                android:layout_below="@id/etNotify"
-                android:id="@+id/spTime"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:entries="@array/time_array"
-                android:textAlignment="center"
-                android:layout_marginStart="60dip"
-                android:layout_marginTop="6dip"
-                android:layout_marginEnd="60dp"
-                android:autofillHints="select"
-                android:background="@drawable/_edit_text"/>
+
+        <EditText
+            android:id="@+id/etNotify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtNotify"
+            android:layout_marginStart="60dip"
+            android:layout_marginTop="10dip"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/_edit_text"
+            android:drawablePadding="3dp"
+            android:hint="@string/mins_or_hours_or_days_or_weeks"
+            android:inputType="numberSigned"
+            android:maxLines="1"
+            android:padding="10dip"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spTime"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/etNotify"
+            android:layout_marginStart="60dip"
+            android:layout_marginTop="6dip"
+            android:layout_marginEnd="60dp"
+            android:autofillHints="select"
+            android:background="@drawable/_edit_text"
+            android:entries="@array/time_array"
+            android:textAlignment="center" />
 
 
 

@@ -1,4 +1,5 @@
 package com.abhinraj.birthdayremainder.database
+
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

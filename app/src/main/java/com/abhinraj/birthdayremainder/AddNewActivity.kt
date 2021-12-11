@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.abhinraj.birthdayremainder.database.BirthdayEntity
+import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
 import com.abhinraj.birthdayremainder.ui.login.LoginActivity
 import java.util.*
 import kotlin.properties.Delegates
@@ -18,10 +20,14 @@ class AddNewActivity : AppCompatActivity() {
     /*val spGender: Spinner = findViewById(R.id.spGender)
     val spTime: Spinner = findViewById(R.id.spTime)*/
     lateinit var toolbar: Toolbar
-    lateinit var etName:EditText
+    lateinit var etName: EditText
     lateinit var etDob : EditText
     lateinit var picker: DatePickerDialog
+    lateinit var gender: Spinner
+    lateinit var time: EditText
+    lateinit var unittime: Spinner
     lateinit var btnAdd:Button
+    val id:Int =1
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
     var year by Delegates.notNull<Int>()
@@ -41,6 +47,9 @@ class AddNewActivity : AppCompatActivity() {
         etName=findViewById(R.id.etName)
         etDob=findViewById(R.id.etDob)
         etDob.inputType = InputType.TYPE_NULL
+        gender=findViewById(R.id.spGender)
+        time = findViewById(R.id.etNotify)
+        unittime =findViewById(R.id.spTime)
         btnAdd=findViewById(R.id.btnAdd)
 
 
@@ -79,6 +88,31 @@ class AddNewActivity : AppCompatActivity() {
                 "\"Selected Date: \" ${etDob.getText()}",
                 Toast.LENGTH_SHORT
             ).show()
+
+            val restaurantEntity = BirthdayEntity(
+                id,
+                etName.getText().toString(),
+                etDob.getText().toString(),
+                gender.toString(),
+                time.getText().toString(),
+                unittime.toString()
+            )
+
+            if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, restaurantEntity, 1).execute().get()) {
+                val async =
+                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, restaurantEntity, 2).execute()
+                val result = async.get()
+                if (result) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Added Successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+
+
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
