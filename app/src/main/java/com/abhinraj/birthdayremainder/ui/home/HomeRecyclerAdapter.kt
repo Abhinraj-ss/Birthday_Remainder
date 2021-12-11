@@ -21,7 +21,6 @@ import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
 import com.abhinraj.birthdayremainder.ui.details.DetailsActivity
-import com.abhinraj.birthdayremainder.ui.details.DetailsFragment
 import java.util.ArrayList
 
 class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthdays>):RecyclerView.Adapter<HomeRecyclerAdapter.UpBirthdaysViewHolder>() {

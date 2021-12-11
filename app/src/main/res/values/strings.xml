@@ -12,6 +12,9 @@
     <string name="upcoming_birthdays">Upcoming birthdays</string>
     <string name="calendar">Calendar</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_details">SettingsActivity</string>
+
+
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
