@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/frame"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeFragment">
     <RelativeLayout
@@ -14,7 +15,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:paddingBottom="10dp"
-            android:background="@android:color/transparent"
+            android:text="Upcoming Birthdays"
+            android:background="#80FFFFFF"
             android:textSize="20sp"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_home"

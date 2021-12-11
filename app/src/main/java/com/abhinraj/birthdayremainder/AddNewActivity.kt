@@ -61,11 +61,7 @@ class AddNewActivity : AppCompatActivity() {
             picker.show()
 
         })
-        Toast.makeText(
-            this@AddNewActivity,
-            "\"Selected Date: \" ${etDob.getText()}",
-            Toast.LENGTH_SHORT
-        ).show()
+
 
 /*
         val spGender = findViewById<View>(R.id.spGender) as Spinner
@@ -78,8 +74,11 @@ class AddNewActivity : AppCompatActivity() {
 
 */
         btnAdd.setOnClickListener {
-
-
+            Toast.makeText(
+                this@AddNewActivity,
+                "\"Selected Date: \" ${etDob.getText()}",
+                Toast.LENGTH_SHORT
+            ).show()
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -101,6 +100,15 @@ class AddNewActivity : AppCompatActivity() {
             "Field cannot be empty",
             Toast.LENGTH_SHORT
         ).show()
+    }*/
+    override fun onSupportNavigateUp(): Boolean {
+      val intent = Intent(this, MainActivity::class.java)
+      startActivity(intent)
+      return true
+    }
+/* for exiting the app
+    override fun onBackPressed() {
+        super.onBackPressed()
     }*/
 }
 

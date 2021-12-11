@@ -103,7 +103,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:background="@drawable/wyt_border"
                 android:paddingVertical="6dp"
                 android:paddingHorizontal="10dp"
                 android:layout_centerHorizontal="true"

@@ -17,25 +17,20 @@ import com.abhinraj.birthdayremainder.R
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
     private lateinit var progressBar: ProgressBar
     private lateinit var rlLoading: RelativeLayout
     lateinit var recyclerHome: RecyclerView
     lateinit var layoutManager: LinearLayoutManager
-    private val list= arrayListOf<String>("AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE","AGE")
+    private val list= arrayListOf<Birthdays>()
     private lateinit var recyclerAdapter: HomeRecyclerAdapter
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
         progressBar = root?.findViewById(R.id.progressBar) as ProgressBar
         rlLoading = root.findViewById(R.id.rlLoading) as RelativeLayout
         rlLoading.visibility = View.VISIBLE
