@@ -94,7 +94,7 @@ class AddNewActivity : AppCompatActivity() {
                 etName.getText().toString(),
                 etDob.getText().toString(),
                 gender.toString(),
-                time.getText().toString(),
+                time.text.toString().toInt(),
                 unittime.toString()
             )
 

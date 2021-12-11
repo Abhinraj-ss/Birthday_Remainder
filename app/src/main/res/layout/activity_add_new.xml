@@ -120,7 +120,7 @@
             android:background="@drawable/_edit_text"
             android:drawablePadding="3dp"
             android:hint="@string/mins_or_hours_or_days_or_weeks"
-            android:inputType="numberSigned"
+            android:inputType="number"
             android:maxLines="1"
             android:padding="10dip"
             android:singleLine="true"

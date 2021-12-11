@@ -5,7 +5,7 @@ data class Birthdays(
     val name: String,
     val dob: String,
     val gender: String,
-    val time: String,
+    val time: Int,
     val unittime: String
 )
 

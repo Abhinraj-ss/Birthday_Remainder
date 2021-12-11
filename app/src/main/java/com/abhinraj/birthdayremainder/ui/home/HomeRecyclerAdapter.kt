@@ -1,5 +1,6 @@
 package com.abhinraj.birthdayremainder.ui.home
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
@@ -49,9 +50,14 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
             transaction.commit()
             (context as AppCompatActivity).supportActionBar?.title = holder.name.text.toString()*/
             val args = Bundle()
-            args.putInt("id", bdayObject.id)
             args.putString("name", bdayObject.name)
+            args.putString("age", bdayObject.name)
+            args.putString("dob", bdayObject.dob)
+            args.putString("gender", bdayObject.gender)
+            args.putString("unittime", bdayObject.unittime)
+            args.putInt("time", bdayObject.time)
             val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra("data",args)
             startActivity(context,intent,args)
         }
     }

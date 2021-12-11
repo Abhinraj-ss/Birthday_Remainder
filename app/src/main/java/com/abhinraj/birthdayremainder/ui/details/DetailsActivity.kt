@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -21,12 +22,12 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
 
     lateinit var toolbar: Toolbar
-    lateinit var etName: EditText
-    lateinit var etDob : EditText
-    lateinit var picker: DatePickerDialog
-    lateinit var gender: Spinner
-    lateinit var time: EditText
-    lateinit var unittime: Spinner
+    lateinit var txtName: TextView
+    lateinit var txtDob : TextView
+    lateinit var txtAge: TextView
+    lateinit var txtGender: TextView
+    lateinit var txtNotify: TextView
+    lateinit var txtUnit: String
 
 
 
@@ -34,18 +35,25 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Details"
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val bundle = intent.getBundleExtra("data")
+        txtName = findViewById(R.id.txtName)
+        txtAge = findViewById(R.id.txtAge)
+        txtDob = findViewById(R.id.txtDob)
+        txtGender = findViewById(R.id.txtGender)
+        txtNotify = findViewById(R.id.txtNotify)
+        txtName.text=bundle.getString("name", "") as String
+        txtAge.text=bundle.getString("age", "") as String
+        txtDob.text=bundle.getString("dob", "") as String
+        txtGender.text=bundle.getString("gender", "") as String
+        txtUnit=bundle.getString("unittime", "") as String
+        txtNotify.text=bundle.getString("time", "") as String +" "+txtUnit
 
 
-       /* binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }*/
     }
     override fun onSupportNavigateUp(): Boolean {
         val intent = Intent(this, MainActivity::class.java)
