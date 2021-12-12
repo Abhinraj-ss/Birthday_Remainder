@@ -3,17 +3,21 @@ package com.abhinraj.birthdayremainder
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
 import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
 import com.abhinraj.birthdayremainder.ui.login.LoginActivity
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
+import kotlin.reflect.typeOf
 
 
 class AddNewActivity : AppCompatActivity() {
@@ -31,8 +35,11 @@ class AddNewActivity : AppCompatActivity() {
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
     var year by Delegates.notNull<Int>()
+    val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+    val currentDate = sdf.format(Date())
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +59,8 @@ class AddNewActivity : AppCompatActivity() {
         unittime =findViewById(R.id.spTime)
         btnAdd=findViewById(R.id.btnAdd)
 
-
+        System.out.println(" C DATE is  "+currentDate)
+        System.out.println(currentDate::class.java.typeName)
         etDob.setOnClickListener(View.OnClickListener {
 
             val cldr: Calendar = Calendar.getInstance()
@@ -89,7 +97,7 @@ class AddNewActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            val restaurantEntity = BirthdayEntity(
+            val birthdayEntity = BirthdayEntity(
                 id,
                 etName.getText().toString(),
                 etDob.getText().toString(),
@@ -98,9 +106,9 @@ class AddNewActivity : AppCompatActivity() {
                 unittime.toString()
             )
 
-            if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, restaurantEntity, 1).execute().get()) {
+            if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute().get()) {
                 val async =
-                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, restaurantEntity, 2).execute()
+                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
                 val result = async.get()
                 if (result) {
                     Toast.makeText(

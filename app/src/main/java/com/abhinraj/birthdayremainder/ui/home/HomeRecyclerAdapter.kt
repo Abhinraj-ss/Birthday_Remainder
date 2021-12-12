@@ -92,19 +92,19 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
 
                 1 -> {
                     val bday: BirthdayEntity? =
-                        db.birthdayDao().getRestaurantById(birthdayEntity.id.toString())
+                        db.birthdayDao().getBirthdayById(birthdayEntity.id.toString())
                     db.close()
                     return bday != null
                 }
 
                 2 -> {
-                    db.birthdayDao().insertRestaurant(birthdayEntity)
+                    db.birthdayDao().insertBirthday(birthdayEntity)
                     db.close()
                     return true
                 }
 
                 3 -> {
-                    db.birthdayDao().deleteRestaurant(birthdayEntity)
+                    db.birthdayDao().deleteBirthday(birthdayEntity)
                     db.close()
                     return true
                 }

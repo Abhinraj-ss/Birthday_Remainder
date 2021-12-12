@@ -10,14 +10,14 @@ import androidx.room.Query
 interface BirthdayDao{
 
     @Insert
-    fun insertRestaurant(restaurantEntity: BirthdayEntity)
+    fun insertBirthday(restaurantEntity: BirthdayEntity)
 
     @Delete
-    fun deleteRestaurant(restaurantEntity: BirthdayEntity)
+    fun deleteBirthday(restaurantEntity: BirthdayEntity)
 
     @Query("SELECT * FROM birthdays")
-    fun getAllRestaurants(): List<BirthdayEntity>
+    fun getAllBirthdays(): List<BirthdayEntity>
 
     @Query("SELECT * FROM birthdays WHERE id = :bdId")
-    fun getRestaurantById(bdId: String): BirthdayEntity
+    fun getBirthdayById(bdId: String): BirthdayEntity
 }
