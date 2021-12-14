@@ -36,8 +36,7 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
             holder.name.text = bdayObject.name
             holder.dob.text = bdayObject.dob
             /*val age = "${bdayObject.dob.toString()}*"to be implimented*/
-            val age = "21*"
-            holder.age.text = age
+            holder.age.text = bdayObject.age.toString()+"*"
 
 
         holder.cardBirthdays.setOnClickListener {

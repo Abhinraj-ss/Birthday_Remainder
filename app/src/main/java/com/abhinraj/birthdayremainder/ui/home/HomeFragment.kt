@@ -35,8 +35,8 @@ class HomeFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        val ex = Birthdays(1, "Abhin Raj", "06/11/2000", "Male", 20, "minutes")
-        val ex1 = Birthdays(2, "Surabi Suresh", "06/11/2001", "Female", 20, "minutes")
+        val ex = Birthdays(1, "Abhin Raj", "06/11/2000", 21,"Male", 20, "minutes")
+        val ex1 = Birthdays(2, "Surabi Suresh", "06/11/2001",20, "Female", 20, "minutes")
 
         list.add(ex)
         list.add(ex1)
@@ -65,6 +65,7 @@ class HomeFragment : Fragment() {
                         i.id,
                         i.name,
                         i.dob.subSequence(0,10).toString(),
+                        i.age,
                         i.gender,
                         i.time,
                         i.unittime

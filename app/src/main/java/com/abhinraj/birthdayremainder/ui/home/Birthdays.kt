@@ -4,6 +4,7 @@ data class Birthdays(
     val id: Int,
     val name: String,
     val dob: String,
+    val age: Int,
     val gender: String,
     val time: Int,
     val unittime: String

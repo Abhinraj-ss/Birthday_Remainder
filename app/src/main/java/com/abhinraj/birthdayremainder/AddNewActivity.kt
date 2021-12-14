@@ -22,8 +22,8 @@ import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
 import com.abhinraj.birthdayremainder.ui.login.LoginActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
-import kotlin.reflect.typeOf
 
 
 class AddNewActivity : AppCompatActivity() {
@@ -37,7 +37,13 @@ class AddNewActivity : AppCompatActivity() {
     lateinit var time: EditText
     lateinit var unittime: Spinner
     lateinit var btnAdd:Button
-    val id =2
+    var age by Delegates.notNull<Int>()/*
+    lateinit var diffYears: String
+    lateinit var diffMonths: String
+    lateinit var diffDays:String
+    lateinit var diffHours:String
+    lateinit var diffMinutes:String
+    lateinit var diffSecs:String*/
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
     var year by Delegates.notNull<Int>()
@@ -72,7 +78,6 @@ class AddNewActivity : AppCompatActivity() {
         btnAdd=findViewById(R.id.btnAdd)
 
         System.out.println(" C DATE is  "+currentDate)
-        System.out.println(currentDate::class.java.typeName)
         etDob.setOnClickListener(View.OnClickListener {
 
             val cldr: Calendar = Calendar.getInstance()
@@ -98,13 +103,67 @@ class AddNewActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            val dob = etDob.getText().toString()+" 00:00:00"
+            var dob = etDob.getText().toString()+" 00:00:00"
+            if (dob[1].toString() == "/")
+                dob = "0"+dob
             System.out.println("Difference is "+ dob)
+
+            val dobList = dob.split("/"," ",":").toList()
+            val currentList = currentDate.split("/"," ",":").toList()
+            val diffList= arrayListOf<Int>()
+            for (i in 0..5){
+                diffList.add(currentList[i].toInt() -dobList[i].toInt())
+            }
+
+
+
+            var diffYears = currentDate.substring(6,9).toInt()-dob.substring(6,9).toInt()
+            var diffMonths = currentDate.substring(3,4).toInt()-dob.substring(3,4).toInt()
+            var diffDays = currentDate.substring(0,1).toInt()-dob.substring(0,1).toInt()
+            var diffHours = currentDate.substring(11,12).toInt()-dob.substring(11,12).toInt()
+            var diffMinutes = currentDate.substring(14,15).toInt()-dob.substring(14,15).toInt()
+            var diffSecs = currentDate.substring(17,18).toInt()-dob.substring(17,18).toInt()
+            diffDays = diffList[0]
+            diffMonths = diffList[1]
+            diffYears =diffList[2]
+            diffHours = diffList[3]
+            diffMinutes = diffList[4]
+            diffSecs = diffList[5]
+            age = diffYears
+            System.out.println("${diffYears}"+" "+ "${diffMonths}"+" "+ "${diffDays}"+" "+ "${diffHours}"+" "+ "${diffMinutes}"+" "+"${diffSecs}")
+            if (diffMonths==0){
+                if (diffDays==0){
+                    if (diffHours==0){
+                        if (diffMinutes==0){
+                            if (diffSecs==0&& month==12 && day==31){
+                                age+=1
+                            }
+                            else if(diffSecs<0){
+                                age-=1
+                            }
+                        }
+                        else if(diffMinutes<0){
+                            age-=1
+                        }
+                    }
+                    else if(diffHours<0){
+                        age-=1
+                    }
+                }
+                else if(diffDays<0){
+                    age-=1
+                }
+            }
+            else if(diffMonths<0){
+                age-=1
+            }
+
 
             val birthdayEntity = BirthdayEntity(
                 backgroundList.size,
                 etName.getText().toString(),
                 dob,
+                age,
                 gender.getSelectedItem().toString(),
                 time.text.toString().toInt(),
                 unittime.getSelectedItem().toString()
@@ -157,16 +216,16 @@ class AddNewActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
     }*/
-    class BirthdaysAsync(context: Context) : AsyncTask<Void, Void, List<BirthdayEntity>>() {
+    /*class BirthdaysAsync(context: Context) : AsyncTask<Void, Void, <BirthdayEntity>>() {
 
         val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
 
-        override fun doInBackground(vararg params: Void?): List<BirthdayEntity> {
+        override fun doInBackground(vararg params: Void?): <BirthdayEntity> {
 
             return db.birthdayDao().getAllBirthdays()
         }
 
-    }
+    }*/
 
 }
 
