@@ -34,8 +34,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddNewActivity::class.java)
             startActivity(intent)
             finish()
-            /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()*/
+
         }
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)

@@ -2,7 +2,9 @@ package com.abhinraj.birthdayremainder
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -12,7 +14,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.startActivity
+import androidx.room.Room
+import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
+import com.abhinraj.birthdayremainder.ui.home.HomeFragment
 import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
 import com.abhinraj.birthdayremainder.ui.login.LoginActivity
 import java.text.SimpleDateFormat
@@ -32,7 +37,7 @@ class AddNewActivity : AppCompatActivity() {
     lateinit var time: EditText
     lateinit var unittime: Spinner
     lateinit var btnAdd:Button
-    val id:Int =3
+    val id =2
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
     var year by Delegates.notNull<Int>()
@@ -50,7 +55,7 @@ class AddNewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_new)
 
 
-
+        val backgroundList = HomeFragment.BirthdaysAsync(this).execute().get()
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -97,7 +102,7 @@ class AddNewActivity : AppCompatActivity() {
             System.out.println("Difference is "+ dob)
 
             val birthdayEntity = BirthdayEntity(
-                id,
+                backgroundList.size,
                 etName.getText().toString(),
                 dob,
                 gender.getSelectedItem().toString(),
@@ -106,9 +111,9 @@ class AddNewActivity : AppCompatActivity() {
             )
             System.out.println(birthdayEntity)
 
-            /*if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 4).execute().get()) {*/
+            if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute().get()) {
                 val async =
-                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute()
+                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
                 val result = async.get()
                 if (result) {
                     Toast.makeText(
@@ -118,7 +123,7 @@ class AddNewActivity : AppCompatActivity() {
                     ).show()
                 }
 
-            /*}*/
+            }
 
 
 
@@ -152,6 +157,17 @@ class AddNewActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
     }*/
+    class BirthdaysAsync(context: Context) : AsyncTask<Void, Void, List<BirthdayEntity>>() {
+
+        val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
+
+        override fun doInBackground(vararg params: Void?): List<BirthdayEntity> {
+
+            return db.birthdayDao().getAllBirthdays()
+        }
+
+    }
+
 }
 
 
