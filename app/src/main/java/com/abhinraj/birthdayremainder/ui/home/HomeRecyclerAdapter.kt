@@ -35,7 +35,6 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
             val bdayObject = birthdays.get(position)
             holder.name.text = bdayObject.name
             holder.dob.text = bdayObject.dob
-            /*val age = "${bdayObject.dob.toString()}*"to be implimented*/
             holder.age.text = bdayObject.age.toString()+"*"
 
 
@@ -50,11 +49,10 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
             (context as AppCompatActivity).supportActionBar?.title = holder.name.text.toString()*/
             val args = Bundle()
             args.putString("name", bdayObject.name)
-            args.putString("age", bdayObject.name)
+            args.putString("age", bdayObject.age.toString()+" year(s)")
             args.putString("dob", bdayObject.dob)
             args.putString("gender", bdayObject.gender)
-            args.putString("unittime", bdayObject.unittime)
-            args.putInt("time", bdayObject.time)
+            args.putString("time", bdayObject.time.toString()+" "+bdayObject.unittime)
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra("data",args)
             startActivity(context,intent,args)

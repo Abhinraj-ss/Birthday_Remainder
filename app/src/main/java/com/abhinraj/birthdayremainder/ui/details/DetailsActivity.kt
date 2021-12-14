@@ -27,7 +27,6 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var txtAge: TextView
     lateinit var txtGender: TextView
     lateinit var txtNotify: TextView
-    lateinit var txtUnit: String
 
 
 
@@ -50,8 +49,7 @@ class DetailsActivity : AppCompatActivity() {
         txtAge.text=bundle.getString("age", "") as String
         txtDob.text=bundle.getString("dob", "") as String
         txtGender.text=bundle.getString("gender", "") as String
-        txtUnit=bundle.getString("unittime", "") as String
-        txtNotify.text=bundle.getString("time", "") as String +" "+txtUnit
+        txtNotify.text=bundle.getString("time", "") as String
 
 
     }

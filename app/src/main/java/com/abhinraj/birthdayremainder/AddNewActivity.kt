@@ -123,6 +123,8 @@ class AddNewActivity : AppCompatActivity() {
             var diffHours = currentDate.substring(11,12).toInt()-dob.substring(11,12).toInt()
             var diffMinutes = currentDate.substring(14,15).toInt()-dob.substring(14,15).toInt()
             var diffSecs = currentDate.substring(17,18).toInt()-dob.substring(17,18).toInt()
+
+
             diffDays = diffList[0]
             diffMonths = diffList[1]
             diffYears =diffList[2]
@@ -130,7 +132,11 @@ class AddNewActivity : AppCompatActivity() {
             diffMinutes = diffList[4]
             diffSecs = diffList[5]
             age = diffYears
+
+
             System.out.println("${diffYears}"+" "+ "${diffMonths}"+" "+ "${diffDays}"+" "+ "${diffHours}"+" "+ "${diffMinutes}"+" "+"${diffSecs}")
+
+
             if (diffMonths==0){
                 if (diffDays==0){
                     if (diffHours==0){
