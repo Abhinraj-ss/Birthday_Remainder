@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.startActivity
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
 import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
 import com.abhinraj.birthdayremainder.ui.login.LoginActivity
@@ -31,12 +32,15 @@ class AddNewActivity : AppCompatActivity() {
     lateinit var time: EditText
     lateinit var unittime: Spinner
     lateinit var btnAdd:Button
-    val id:Int =1
+    val id:Int =3
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
     var year by Delegates.notNull<Int>()
-    val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+    val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
     val currentDate = sdf.format(Date())
+
+
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -44,6 +48,9 @@ class AddNewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new)
+
+
+
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -79,17 +86,6 @@ class AddNewActivity : AppCompatActivity() {
 
         })
 
-
-/*
-        val spGender = findViewById<View>(R.id.spGender) as Spinner
-        val adapter: ArrayAdapter<String> =
-            ArrayAdapter<String>(this@AddNewActivity, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spGender.adapter = adapter
-        spGender.setOnItemSelectedListener(this)
-
-
-*/
         btnAdd.setOnClickListener {
             Toast.makeText(
                 this@AddNewActivity,
@@ -97,18 +93,22 @@ class AddNewActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
+            val dob = etDob.getText().toString()+" 00:00:00"
+            System.out.println("Difference is "+ dob)
+
             val birthdayEntity = BirthdayEntity(
                 id,
                 etName.getText().toString(),
-                etDob.getText().toString(),
-                gender.toString(),
+                dob,
+                gender.getSelectedItem().toString(),
                 time.text.toString().toInt(),
-                unittime.toString()
+                unittime.getSelectedItem().toString()
             )
+            System.out.println(birthdayEntity)
 
-            if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute().get()) {
+            /*if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 4).execute().get()) {*/
                 val async =
-                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
+                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute()
                 val result = async.get()
                 if (result) {
                     Toast.makeText(
@@ -118,7 +118,7 @@ class AddNewActivity : AppCompatActivity() {
                     ).show()
                 }
 
-            }
+            /*}*/
 
 
 
