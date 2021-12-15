@@ -83,6 +83,7 @@ class AddNewActivity : AppCompatActivity() {
             month = cldr.get(Calendar.MONTH)
             year = cldr.get(Calendar.YEAR)
             // date picker dialog
+
             picker = DatePickerDialog(
                 this,
                 { view, year, monthOfYear, dayOfMonth -> etDob.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year) },
@@ -90,6 +91,9 @@ class AddNewActivity : AppCompatActivity() {
                 month,
                 day
             )
+            val today = Calendar.getInstance()
+            val now = today.timeInMillis
+            picker.datePicker.setMaxDate(now)
             picker.show()
 
         })
@@ -111,7 +115,6 @@ class AddNewActivity : AppCompatActivity() {
             var dob = etDob.getText().toString()+" 00:00:00"
             if (dob[1].toString() == "/")
                 dob = "0"+dob
-            System.out.println("Difference is "+ dob)
 
             val dobList = dob.split("/"," ",":").toList()
             val currentList = currentDate.split("/"," ",":").toList()
@@ -120,52 +123,36 @@ class AddNewActivity : AppCompatActivity() {
                 diffList.add(currentList[i].toInt() -dobList[i].toInt())
             }
 
+            age = diffList[2]
 
 
-            var diffYears = currentDate.substring(6,9).toInt()-dob.substring(6,9).toInt()
-            var diffMonths = currentDate.substring(3,4).toInt()-dob.substring(3,4).toInt()
-            var diffDays = currentDate.substring(0,1).toInt()-dob.substring(0,1).toInt()
-            var diffHours = currentDate.substring(11,12).toInt()-dob.substring(11,12).toInt()
-            var diffMinutes = currentDate.substring(14,15).toInt()-dob.substring(14,15).toInt()
-            var diffSecs = currentDate.substring(17,18).toInt()-dob.substring(17,18).toInt()
+            System.out.println("${diffList[2]}"+" "+ "${diffList[1]}"+" "+ "${diffList[0]}"+" "+ "${diffList[3]}"+" "+ "${diffList[4]}"+" "+"${diffList[5]}")
 
 
-            diffDays = diffList[0]
-            diffMonths = diffList[1]
-            diffYears =diffList[2]
-            diffHours = diffList[3]
-            diffMinutes = diffList[4]
-            diffSecs = diffList[5]
-            age = diffYears
-
-
-            System.out.println("${diffYears}"+" "+ "${diffMonths}"+" "+ "${diffDays}"+" "+ "${diffHours}"+" "+ "${diffMinutes}"+" "+"${diffSecs}")
-
-
-            if (diffMonths==0){
-                if (diffDays==0){
-                    if (diffHours==0){
-                        if (diffMinutes==0){
-                            if (diffSecs==0&& month==12 && day==31){
+            if (diffList[1]==0){
+                if (diffList[0]==0){
+                    if (diffList[3]==0){
+                        if (diffList[4]==0){
+                            if (diffList[5]==0&& month==12 && day==31){
                                 age+=1
                             }
-                            else if(diffSecs<0){
+                            else if(diffList[5]<0){
                                 age-=1
                             }
                         }
-                        else if(diffMinutes<0){
+                        else if(diffList[4]<0){
                             age-=1
                         }
                     }
-                    else if(diffHours<0){
+                    else if(diffList[3]<0){
                         age-=1
                     }
                 }
-                else if(diffDays<0){
+                else if(diffList[0]<0){
                     age-=1
                 }
             }
-            else if(diffMonths<0){
+            else if(diffList[1]<0){
                 age-=1
             }
 

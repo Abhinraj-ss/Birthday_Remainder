@@ -58,50 +58,36 @@ class HomeFragment : Fragment() {
             for (i in 0..5){
                 diffList.add(currentList[i].toInt() -dobList[i].toInt())
             }
-            var diffYears = currentDate.substring(6,9).toInt()-i.dob.substring(6,9).toInt()
-            var diffMonths = currentDate.substring(3,4).toInt()-i.dob.substring(3,4).toInt()
-            var diffDays = currentDate.substring(0,1).toInt()-i.dob.substring(0,1).toInt()
-            var diffHours = currentDate.substring(11,12).toInt()-i.dob.substring(11,12).toInt()
-            var diffMinutes = currentDate.substring(14,15).toInt()-i.dob.substring(14,15).toInt()
-            var diffSecs = currentDate.substring(17,18).toInt()-i.dob.substring(17,18).toInt()
+            var age = diffList[2]
 
 
-            diffDays = diffList[0]
-            diffMonths = diffList[1]
-            diffYears =diffList[2]
-            diffHours = diffList[3]
-            diffMinutes = diffList[4]
-            diffSecs = diffList[5]
-            var age = diffYears
+            System.out.println("${diffList[2]}"+" "+ "${diffList[1]}"+" "+ "${diffList[0]}"+" "+ "${diffList[3]}"+" "+ "${diffList[4]}"+" "+"${diffList[5]}")
 
 
-            System.out.println("${diffYears}"+" "+ "${diffMonths}"+" "+ "${diffDays}"+" "+ "${diffHours}"+" "+ "${diffMinutes}"+" "+"${diffSecs}")
-
-
-            if (diffMonths==0){
-                if (diffDays==0){
-                    if (diffHours==0){
-                        if (diffMinutes==0){
-                            if (diffSecs==0&& dobList[1].toInt()==12 && dobList[0].toInt()==31){
+            if (diffList[1]==0){
+                if (diffList[0]==0){
+                    if (diffList[3]==0){
+                        if (diffList[4]==0){
+                            if (diffList[5]==0&& dobList[1].toInt()==12 && dobList[0].toInt()==31){
                                 age+=1
                             }
-                            else if(diffSecs<0){
+                            else if(diffList[5]<0){
                                 age-=1
                             }
                         }
-                        else if(diffMinutes<0){
+                        else if(diffList[4]<0){
                             age-=1
                         }
                     }
-                    else if(diffHours<0){
+                    else if(diffList[3]<0){
                         age-=1
                     }
                 }
-                else if(diffDays<0){
+                else if(diffList[0]<0){
                     age-=1
                 }
             }
-            else if(diffMonths<0){
+            else if(diffList[1]<0){
                 age-=1
             }
             i.age = age
