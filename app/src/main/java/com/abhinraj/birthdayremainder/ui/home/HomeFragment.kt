@@ -44,6 +44,11 @@ class HomeFragment : Fragment() {
 
 
         val backgroundList = BirthdaysAsync(activity as Context).execute().get()
+        val size = backgroundList.size
+
+        for (i in backgroundList){
+
+        }
 
         progressBar = root?.findViewById(R.id.progressBar) as ProgressBar
         rlLoading = root.findViewById(R.id.rlLoading) as RelativeLayout

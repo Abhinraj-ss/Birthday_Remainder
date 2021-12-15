@@ -2,9 +2,7 @@ package com.abhinraj.birthdayremainder
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -13,16 +11,11 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat.startActivity
-import androidx.room.Room
-import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
 import com.abhinraj.birthdayremainder.ui.home.HomeFragment
 import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
-import com.abhinraj.birthdayremainder.ui.login.LoginActivity
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 

@@ -1,20 +1,15 @@
 package com.abhinraj.birthdayremainder.ui.home
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.abhinraj.birthdayremainder.MainActivity
@@ -102,6 +97,11 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
 
                 3 -> {
                     db.birthdayDao().deleteBirthday(birthdayEntity)
+                    db.close()
+                    return true
+                }
+                4 -> {
+                    db.birthdayDao().updateBirthdaysById(birthdayEntity.age,birthdayEntity.id.toString())
                     db.close()
                     return true
                 }

@@ -20,4 +20,7 @@ interface BirthdayDao{
 
     @Query("SELECT * FROM birthdays WHERE id = :bdId")
     fun getBirthdayById(bdId: String): BirthdayEntity
+
+    @Query("UPDATE birthdays SET age = :newAge WHERE id= :bdId")
+    fun updateBirthdaysById(newAge : Int , bdId: String)
 }
