@@ -119,13 +119,14 @@ class HomeFragment : Fragment() {
                 )
             }
         }
-            //sortList(list,1)
-            recyclerHome = root.findViewById(R.id.recycler_home)
-            layoutManager = LinearLayoutManager(activity)
-            recyclerAdapter = HomeRecyclerAdapter(activity as Context, list)
-            recyclerHome.adapter = recyclerAdapter
-            recyclerHome.layoutManager = layoutManager
-            return root
+        //sortList(list,1)
+        recyclerHome = root.findViewById(R.id.recycler_home)
+        layoutManager = LinearLayoutManager(activity)
+        recyclerAdapter = HomeRecyclerAdapter(activity as Context, list)
+        recyclerHome.adapter = recyclerAdapter
+        recyclerHome.layoutManager = layoutManager
+        setHasOptionsMenu(true)
+        return root
         }
 
     /*private fun sortList(list: ArrayList<Birthdays>, mode: Int) {
@@ -140,13 +141,26 @@ class HomeFragment : Fragment() {
         activity?.menuInflater?.inflate(R.menu.main, menu)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_sort -> showDialog(context as Context)
+            R.id.action_sort_bday -> {
+                println(list)
+                Collections.sort(list, Sorter.ageComparator)
+            }
+            R.id.action_sort_name -> {
+                println(list)
+                Collections.sort(list, Sorter.ageComparator)
+                list.reverse()
+            }
+            R.id.action_sort_age -> {
+                Collections.sort(list, Sorter.nameComparator)
+            }
         }
+        recyclerAdapter.notifyDataSetChanged()
         return super.onOptionsItemSelected(item)
     }
-
+/*
     @SuppressLint("NotifyDataSetChanged")
     private fun showDialog(context: Context) {
 
@@ -177,7 +191,7 @@ class HomeFragment : Fragment() {
             builder.create()
             builder.show()
         }
-    }
+    }*/
 
     class BirthdaysAsync(context: Context) : AsyncTask<Void, Void, List<BirthdayEntity>>() {
 

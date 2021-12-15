@@ -52,6 +52,9 @@
     <string name="notify_me_before">Notify me before</string>
     <string name="gender">Gender :</string>
     <string name="filter">Filter</string>
+    <string name="birthday">Birthday</string>
+    <string name="name">Name</string>
+    <string name="age_h_l">Age(H-L)</string>
     <string-array name="time_array">
         <item>Select</item>
         <item>Minutes</item>
@@ -65,9 +68,5 @@
         <item>Female</item>
         <item>Prefer not to say</item>
     </string-array>
-    <array name="filters">
-        <item>Birthday</item>
-        <item>Name</item>
-        <item>Age(H-L)</item>
-    </array>
+
 </resources>

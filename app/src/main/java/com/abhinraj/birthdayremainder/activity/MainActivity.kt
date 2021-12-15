@@ -55,14 +55,10 @@ class MainActivity : AppCompatActivity() {
        /* supportActionBar?.title = "All Restaurants"
         navView.setCheckedItem(R.id.nav_home)*/
     }
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+        return false
     }
 
     override fun onSupportNavigateUp(): Boolean {
