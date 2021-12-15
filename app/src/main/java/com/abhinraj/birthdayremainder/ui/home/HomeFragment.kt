@@ -145,17 +145,19 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_sort_bday -> {
-                println(list)
+                Collections.sort(list, Sorter.bdayComparator)
+            }
+            R.id.action_sort_age -> {
                 Collections.sort(list, Sorter.ageComparator)
             }
-            R.id.action_sort_name -> {
-                println(list)
+            R.id.action_sort_age_desc -> {
                 Collections.sort(list, Sorter.ageComparator)
                 list.reverse()
             }
-            R.id.action_sort_age -> {
+            R.id.action_sort_name -> {
                 Collections.sort(list, Sorter.nameComparator)
             }
+
         }
         recyclerAdapter.notifyDataSetChanged()
         return super.onOptionsItemSelected(item)

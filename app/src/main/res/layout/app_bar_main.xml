@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:fabSize="normal"
         android:src="@drawable/ic_add_new"
-        android:backgroundTint="#80FFFFFF"
-        app:maxImageSize="66dp" />
+        app:maxImageSize="70dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
