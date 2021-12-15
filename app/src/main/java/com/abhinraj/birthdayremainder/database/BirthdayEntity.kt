@@ -9,7 +9,7 @@ data class BirthdayEntity(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "dob") val dob: String,
-    @ColumnInfo(name = "age") val age: Int,
+    @ColumnInfo(name = "age") var age: Int,
     @ColumnInfo(name = "gender") val gender: String,
     @ColumnInfo(name = "time") val time: Int,
     @ColumnInfo(name = "unittime") val unittime: String

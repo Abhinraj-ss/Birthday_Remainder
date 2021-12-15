@@ -19,6 +19,8 @@ import androidx.room.Room
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -28,6 +30,9 @@ class HomeFragment : Fragment() {
     lateinit var layoutManager: LinearLayoutManager
     private val list = arrayListOf<Birthdays>()
     private lateinit var recyclerAdapter: HomeRecyclerAdapter
+    val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+    val currentDate = sdf.format(Date())
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,10 +49,65 @@ class HomeFragment : Fragment() {
 
 
         val backgroundList = BirthdaysAsync(activity as Context).execute().get()
-        val size = backgroundList.size
 
         for (i in backgroundList){
 
+            val dobList = i.dob.split("/"," ",":").toList()
+            val currentList = currentDate.split("/"," ",":").toList()
+            val diffList= arrayListOf<Int>()
+            for (i in 0..5){
+                diffList.add(currentList[i].toInt() -dobList[i].toInt())
+            }
+            var diffYears = currentDate.substring(6,9).toInt()-i.dob.substring(6,9).toInt()
+            var diffMonths = currentDate.substring(3,4).toInt()-i.dob.substring(3,4).toInt()
+            var diffDays = currentDate.substring(0,1).toInt()-i.dob.substring(0,1).toInt()
+            var diffHours = currentDate.substring(11,12).toInt()-i.dob.substring(11,12).toInt()
+            var diffMinutes = currentDate.substring(14,15).toInt()-i.dob.substring(14,15).toInt()
+            var diffSecs = currentDate.substring(17,18).toInt()-i.dob.substring(17,18).toInt()
+
+
+            diffDays = diffList[0]
+            diffMonths = diffList[1]
+            diffYears =diffList[2]
+            diffHours = diffList[3]
+            diffMinutes = diffList[4]
+            diffSecs = diffList[5]
+            var age = diffYears
+
+
+            System.out.println("${diffYears}"+" "+ "${diffMonths}"+" "+ "${diffDays}"+" "+ "${diffHours}"+" "+ "${diffMinutes}"+" "+"${diffSecs}")
+
+
+            if (diffMonths==0){
+                if (diffDays==0){
+                    if (diffHours==0){
+                        if (diffMinutes==0){
+                            if (diffSecs==0&& dobList[1].toInt()==12 && dobList[0].toInt()==31){
+                                age+=1
+                            }
+                            else if(diffSecs<0){
+                                age-=1
+                            }
+                        }
+                        else if(diffMinutes<0){
+                            age-=1
+                        }
+                    }
+                    else if(diffHours<0){
+                        age-=1
+                    }
+                }
+                else if(diffDays<0){
+                    age-=1
+                }
+            }
+            else if(diffMonths<0){
+                age-=1
+            }
+            i.age = age
+            val async =
+                HomeRecyclerAdapter.DBAsyncTask(activity as Context, i, 4).execute()
+            val result = async.get()
         }
 
         progressBar = root?.findViewById(R.id.progressBar) as ProgressBar
