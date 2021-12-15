@@ -16,6 +16,7 @@
             android:label="@string/title_activity_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:windowSoftInputMode="stateVisible"
             android:name=".AddNewActivity"
             android:label="@string/title_activity_add_new"
             android:theme="@style/AppTheme.NoActionBar" />

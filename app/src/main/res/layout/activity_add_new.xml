@@ -11,38 +11,41 @@
     android:orientation="vertical">
 
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rlRegister"
-            android:background="@color/colorPrimary">
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar"/>
-            <ImageView
-                android:id="@+id/imgAlarm"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="45dp"
-                android:src="@drawable/ic_baseline_add_alarm_24"
-                android:layout_centerHorizontal="true"/>
+        android:id="@+id/rlRegister"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
 
-            <EditText
-                android:id="@+id/etName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgAlarm"
-                android:layout_marginLeft="12dip"
-                android:background="@drawable/_edit_text"
-                android:layout_marginTop="25dip"
-                android:layout_marginRight="12dip"
-                android:hint="@string/enter_name"
-                android:inputType="textCapWords"
-                android:padding="10dip"
-                android:singleLine="true"
-                android:drawableStart="@drawable/ic_baseline_account_circle_24"
-                android:drawablePadding="3dp"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <ImageView
+            android:id="@+id/imgAlarm"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"
+            android:src="@drawable/ic_baseline_add_alarm_24" />
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgAlarm"
+            android:layout_marginLeft="12dip"
+            android:layout_marginTop="25dip"
+            android:layout_marginRight="12dip"
+            android:background="@drawable/_edit_text"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:drawablePadding="3dp"
+            android:hint="@string/enter_name"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:padding="10dip"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/etDob"
@@ -53,6 +56,9 @@
             android:layout_marginTop="6dip"
             android:layout_marginRight="12dip"
             android:background="@drawable/_edit_text"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
             android:drawableStart="@drawable/ic_calendar"
             android:drawablePadding="3dp"
             android:ems="10"
@@ -63,51 +69,54 @@
             android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rlGender"
-                android:layout_below="@id/etDob"
-                android:layout_marginLeft="12dip"
-                android:layout_marginTop="6dip"
-                android:layout_marginRight="12dip"
-                android:layout_centerHorizontal="true">
-                <TextView
-                    android:id="@+id/txtGender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="@string/gender"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginEnd="4dp"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="6dp"
-                    android:padding="6dp"/>
 
-                <Spinner
-                    android:id="@+id/spGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="6dip"
-                    android:layout_toRightOf="@id/txtGender"
-                    android:background="@drawable/_edit_text"
-                    android:entries="@array/gender"
-                    android:textAlignment="center" />
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etDob"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="12dip"
+            android:layout_marginTop="6dip"
+            android:layout_marginRight="12dip">
+
             <TextView
-                android:layout_below="@id/rlGender"
-                android:id="@+id/txtNotify"
+                android:id="@+id/txtGender"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notify_me_before"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_height="40dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="4dp"
+                android:padding="6dp"
+                android:text="@string/gender"
                 android:textColor="@color/white"
-                android:paddingVertical="6dp"
-                android:paddingHorizontal="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spGender"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dip"
+                android:layout_toRightOf="@id/txtGender"
+                android:background="@drawable/_edit_text"
+                android:entries="@array/gender"
+                android:textAlignment="center" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtNotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlGender"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="6dp"
+            android:text="@string/notify_me_before"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etNotify"
@@ -140,7 +149,6 @@
             android:background="@drawable/_edit_text"
             android:entries="@array/time_array"
             android:textAlignment="center" />
-
 
 
     </RelativeLayout>

@@ -2,11 +2,13 @@ package com.abhinraj.birthdayremainder
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -14,14 +16,19 @@ import androidx.appcompat.widget.Toolbar
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
 import com.abhinraj.birthdayremainder.ui.home.HomeFragment
 import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
+import kotlinx.android.synthetic.main.activity_add_new.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
+import android.view.MotionEvent
+
+import android.view.View.OnTouchListener
+
+
+
 
 
 class AddNewActivity : AppCompatActivity() {
-    /*val spGender: Spinner = findViewById(R.id.spGender)
-    val spTime: Spinner = findViewById(R.id.spTime)*/
     lateinit var toolbar: Toolbar
     lateinit var etName: EditText
     lateinit var etDob : EditText
@@ -30,17 +37,11 @@ class AddNewActivity : AppCompatActivity() {
     lateinit var time: EditText
     lateinit var unittime: Spinner
     lateinit var btnAdd:Button
-    var age by Delegates.notNull<Int>()/*
-    lateinit var diffYears: String
-    lateinit var diffMonths: String
-    lateinit var diffDays:String
-    lateinit var diffHours:String
-    lateinit var diffMinutes:String
-    lateinit var diffSecs:String*/
+    var age by Delegates.notNull<Int>()
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
     var year by Delegates.notNull<Int>()
-    val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
     val currentDate = sdf.format(Date())
 
 
@@ -73,6 +74,10 @@ class AddNewActivity : AppCompatActivity() {
         System.out.println(" C DATE is  "+currentDate)
         etDob.setOnClickListener(View.OnClickListener {
 
+            this.currentFocus?.let { view ->
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             val cldr: Calendar = Calendar.getInstance()
             day = cldr.get(Calendar.DAY_OF_MONTH)
             month = cldr.get(Calendar.MONTH)
@@ -89,6 +94,13 @@ class AddNewActivity : AppCompatActivity() {
 
         })
 
+
+        unittime.setOnTouchListener(OnTouchListener { v, event ->
+            val imm =
+                applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+            false
+        })
         btnAdd.setOnClickListener {
             Toast.makeText(
                 this@AddNewActivity,
