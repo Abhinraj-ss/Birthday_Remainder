@@ -1,19 +1,11 @@
 package com.abhinraj.birthdayremainder.ui.details
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.Spinner
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.abhinraj.birthdayremainder.MainActivity
+import com.abhinraj.birthdayremainder.activity.MainActivity
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.databinding.ActivityDetailsBinding
 

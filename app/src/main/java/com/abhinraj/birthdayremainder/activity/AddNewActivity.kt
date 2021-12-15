@@ -1,4 +1,4 @@
-package com.abhinraj.birthdayremainder
+package com.abhinraj.birthdayremainder.activity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -16,16 +16,12 @@ import androidx.appcompat.widget.Toolbar
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
 import com.abhinraj.birthdayremainder.ui.home.HomeFragment
 import com.abhinraj.birthdayremainder.ui.home.HomeRecyclerAdapter
-import kotlinx.android.synthetic.main.activity_add_new.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
-import android.view.MotionEvent
 
 import android.view.View.OnTouchListener
-
-
-
+import com.abhinraj.birthdayremainder.R
 
 
 class AddNewActivity : AppCompatActivity() {
@@ -71,7 +67,6 @@ class AddNewActivity : AppCompatActivity() {
         unittime =findViewById(R.id.spTime)
         btnAdd=findViewById(R.id.btnAdd)
 
-        System.out.println(" C DATE is  "+currentDate)
         etDob.setOnClickListener(View.OnClickListener {
 
             this.currentFocus?.let { view ->
@@ -106,11 +101,6 @@ class AddNewActivity : AppCompatActivity() {
             false
         })
         btnAdd.setOnClickListener {
-            Toast.makeText(
-                this@AddNewActivity,
-                "\"Selected Date: \" ${etDob.getText()}",
-                Toast.LENGTH_SHORT
-            ).show()
 
             var dob = etDob.getText().toString()+" 00:00:00"
             if (dob[1].toString() == "/")

@@ -1,5 +1,6 @@
 package com.abhinraj.birthdayremainder.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
@@ -12,7 +13,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.abhinraj.birthdayremainder.MainActivity
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
@@ -26,8 +26,9 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
         return UpBirthdaysViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UpBirthdaysViewHolder, position: Int) {
-            val bdayObject = birthdays.get(position)
+            val bdayObject = birthdays[position]
             holder.name.text = bdayObject.name
             holder.dob.text = bdayObject.dob
             holder.age.text = bdayObject.age.toString()+"*"
@@ -67,18 +68,13 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
         /*val personImage = view.findViewById(R.id.imgPerson) as ImageView*/
     }
 
-    class DBAsyncTask(context: Context, val birthdayEntity: BirthdayEntity, val mode: Int) :
+    class DBAsyncTask(context: Context, private val birthdayEntity: BirthdayEntity, private val mode: Int) :
         AsyncTask<Void, Void, Boolean>() {
 
-        val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
+        private val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
 
         override fun doInBackground(vararg params: Void?): Boolean {
 
-            /*
-            Mode 1 -> Check DB if the book is favourite or not
-            Mode 2 -> Save the book into DB as favourite
-            Mode 3 -> Remove the favourite book
-            */
 
             when (mode) {
 

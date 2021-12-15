@@ -1,24 +1,21 @@
 package com.abhinraj.birthdayremainder.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
+import com.abhinraj.birthdayremainder.util.Sorter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,20 +23,22 @@ class HomeFragment : Fragment() {
 
     private lateinit var progressBar: ProgressBar
     private lateinit var rlLoading: RelativeLayout
-    lateinit var recyclerHome: RecyclerView
-    lateinit var layoutManager: LinearLayoutManager
+    private lateinit var recyclerHome: RecyclerView
+    private lateinit var layoutManager: LinearLayoutManager
     private val list = arrayListOf<Birthdays>()
     private lateinit var recyclerAdapter: HomeRecyclerAdapter
+    @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
-    val currentDate = sdf.format(Date())
+    private val currentDate = sdf.format(Date())
+    private var checkedItem: Int = -1
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
 
 
         val ex = Birthdays(1, "Abhin Raj", "06/11/2000", 21,"Male", 20, "minutes")
@@ -55,13 +54,13 @@ class HomeFragment : Fragment() {
             val dobList = i.dob.split("/"," ",":").toList()
             val currentList = currentDate.split("/"," ",":").toList()
             val diffList= arrayListOf<Int>()
-            for (i in 0..5){
-                diffList.add(currentList[i].toInt() -dobList[i].toInt())
+            for (j in 0..5){
+                diffList.add(currentList[j].toInt() -dobList[j].toInt())
             }
             var age = diffList[2]
 
 
-            System.out.println("${diffList[2]}"+" "+ "${diffList[1]}"+" "+ "${diffList[0]}"+" "+ "${diffList[3]}"+" "+ "${diffList[4]}"+" "+"${diffList[5]}")
+            println("${diffList[2]}"+" "+ "${diffList[1]}"+" "+ "${diffList[0]}"+" "+ "${diffList[3]}"+" "+ "${diffList[4]}"+" "+"${diffList[5]}")
 
 
             if (diffList[1]==0){
@@ -91,9 +90,7 @@ class HomeFragment : Fragment() {
                 age-=1
             }
             i.age = age
-            val async =
-                HomeRecyclerAdapter.DBAsyncTask(activity as Context, i, 4).execute()
-            val result = async.get()
+            HomeRecyclerAdapter.DBAsyncTask(activity as Context, i, 4).execute().get()
         }
 
         progressBar = root?.findViewById(R.id.progressBar) as ProgressBar
@@ -108,7 +105,6 @@ class HomeFragment : Fragment() {
             rlLoading.visibility = View.INVISIBLE
             rlLoading.visibility = View.GONE
             progressBar.visibility = View.GONE
-            System.out.println(backgroundList)
             for (i in backgroundList) {
                 list.add(
                     Birthdays(
@@ -123,7 +119,7 @@ class HomeFragment : Fragment() {
                 )
             }
         }
-
+            //sortList(list,1)
             recyclerHome = root.findViewById(R.id.recycler_home)
             layoutManager = LinearLayoutManager(activity)
             recyclerAdapter = HomeRecyclerAdapter(activity as Context, list)
@@ -132,9 +128,60 @@ class HomeFragment : Fragment() {
             return root
         }
 
-        class BirthdaysAsync(context: Context) : AsyncTask<Void, Void, List<BirthdayEntity>>() {
+    /*private fun sortList(list: ArrayList<Birthdays>, mode: Int) {
+        when(mode){//sort by Name
+            1-> {
+                sortList(list)
+            }
+        }
+    }*/
 
-            val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        activity?.menuInflater?.inflate(R.menu.main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_sort -> showDialog(context as Context)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showDialog(context: Context) {
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle("Sort By?")
+        builder.setSingleChoiceItems(R.array.filters, checkedItem) { _, isChecked ->
+            checkedItem = isChecked
+        }
+        builder.setPositiveButton("Ok") { _, _ ->
+
+            when (checkedItem) {
+                0 -> {
+                    Collections.sort(list, Sorter.ageComparator)
+                }
+                1 -> {
+                    Collections.sort(list, Sorter.ageComparator)
+                    list.reverse()
+                }
+                2 -> {
+                    Collections.sort(list, Sorter.nameComparator)
+                    list.reverse()
+                }
+            }
+            recyclerAdapter.notifyDataSetChanged()
+            builder.setNegativeButton("Cancel") { _, _ ->
+
+            }
+            builder.create()
+            builder.show()
+        }
+    }
+
+    class BirthdaysAsync(context: Context) : AsyncTask<Void, Void, List<BirthdayEntity>>() {
+
+            private val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
 
             override fun doInBackground(vararg params: Void?): List<BirthdayEntity> {
 

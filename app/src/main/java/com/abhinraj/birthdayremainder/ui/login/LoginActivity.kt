@@ -15,7 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.abhinraj.birthdayremainder.MainActivity
+import com.abhinraj.birthdayremainder.activity.MainActivity
 
 import com.abhinraj.birthdayremainder.R
 

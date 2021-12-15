@@ -1,10 +1,11 @@
-package com.abhinraj.birthdayremainder
+package com.abhinraj.birthdayremainder.activity
 
 import android.Manifest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.ui.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
