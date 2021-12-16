@@ -123,7 +123,6 @@ class HomeFragment : Fragment() {
                 )
             }
         }
-        //sortList(list,1)
         Collections.sort(list, Sorter.bdayComparator)
         recyclerHome = root.findViewById(R.id.recycler_home)
         layoutManager = LinearLayoutManager(activity)
@@ -134,13 +133,6 @@ class HomeFragment : Fragment() {
         return root
         }
 
-    /*private fun sortList(list: ArrayList<Birthdays>, mode: Int) {
-        when(mode){//sort by Name
-            1-> {
-                sortList(list)
-            }
-        }
-    }*/
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         activity?.menuInflater?.inflate(R.menu.main, menu)

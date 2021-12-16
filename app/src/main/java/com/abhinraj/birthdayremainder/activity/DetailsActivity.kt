@@ -2,11 +2,17 @@ package com.abhinraj.birthdayremainder.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.databinding.ActivityDetailsBinding
+import com.abhinraj.birthdayremainder.util.NotificationHelper
+import java.security.AccessController.getContext
+import java.text.Collator.getInstance
+import java.util.Calendar.getInstance
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -18,7 +24,7 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var txtAge: TextView
     lateinit var txtGender: TextView
     lateinit var txtNotify: TextView
-
+    lateinit var btnNotify: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +42,7 @@ class DetailsActivity : AppCompatActivity() {
         txtDob = findViewById(R.id.txtDob)
         txtGender = findViewById(R.id.txtGender)
         txtNotify = findViewById(R.id.txtNotify)
+        btnNotify = findViewById(R.id.btnNotify)
         txtName.text=bundle.getString("name", "") as String
         txtAge.text=bundle.getString("age", "") as String
         txtDob.text=(bundle.getString("dob", "") as String).subSequence(0,10).toString()
@@ -43,6 +50,19 @@ class DetailsActivity : AppCompatActivity() {
         txtNotify.text=bundle.getString("time", "") as String
 
 
+
+        NotificationHelper.createNotificationChannel(
+            this,
+            NotificationManagerCompat.IMPORTANCE_DEFAULT,
+            false,
+            getString(R.string.app_name),
+            "App notification channel."
+        )
+
+
+        btnNotify.setOnClickListener {
+            NotificationHelper.createSampleDataNotification(this)
+        }
     }
     override fun onSupportNavigateUp(): Boolean {
         val intent = Intent(this, MainActivity::class.java)
