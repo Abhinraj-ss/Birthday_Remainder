@@ -24,7 +24,7 @@ class SlideshowFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
         val textView: TextView = root.findViewById(R.id.text_slideshow)
         slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            textView.text = "To be implimented."
         })
         return root
     }

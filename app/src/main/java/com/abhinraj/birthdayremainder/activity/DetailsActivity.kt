@@ -1,11 +1,10 @@
-package com.abhinraj.birthdayremainder.ui.details
+package com.abhinraj.birthdayremainder.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.abhinraj.birthdayremainder.activity.MainActivity
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.databinding.ActivityDetailsBinding
 
@@ -39,7 +38,7 @@ class DetailsActivity : AppCompatActivity() {
         txtNotify = findViewById(R.id.txtNotify)
         txtName.text=bundle.getString("name", "") as String
         txtAge.text=bundle.getString("age", "") as String
-        txtDob.text=bundle.getString("dob", "") as String
+        txtDob.text=(bundle.getString("dob", "") as String).subSequence(0,10).toString()
         txtGender.text=bundle.getString("gender", "") as String
         txtNotify.text=bundle.getString("time", "") as String
 

@@ -15,7 +15,6 @@
     <string name="title_activity_details">SettingsActivity</string>
 
 
-
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

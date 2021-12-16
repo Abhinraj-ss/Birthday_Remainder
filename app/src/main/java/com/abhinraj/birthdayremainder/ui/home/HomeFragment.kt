@@ -1,7 +1,9 @@
 package com.abhinraj.birthdayremainder.ui.home
 
 import android.annotation.SuppressLint
+import android.content.ClipData
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.*
@@ -13,9 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.abhinraj.birthdayremainder.R
+import com.abhinraj.birthdayremainder.activity.AddNewActivity
+import com.abhinraj.birthdayremainder.activity.SettingsActivity
 import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
 import com.abhinraj.birthdayremainder.util.Sorter
+import java.security.cert.PKIXRevocationChecker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,8 +35,6 @@ class HomeFragment : Fragment() {
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
     private val currentDate = sdf.format(Date())
-    private var checkedItem: Int = -1
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +42,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+
 
 
         val ex = Birthdays(1, "Abhin Raj", "06/11/2000"+" 00:00:00", 21,"Male", 20, "minutes")
@@ -120,6 +124,7 @@ class HomeFragment : Fragment() {
             }
         }
         //sortList(list,1)
+        Collections.sort(list, Sorter.bdayComparator)
         recyclerHome = root.findViewById(R.id.recycler_home)
         layoutManager = LinearLayoutManager(activity)
         recyclerAdapter = HomeRecyclerAdapter(activity as Context, list)
@@ -144,6 +149,10 @@ class HomeFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_settings ->{
+                val intent = Intent(context, SettingsActivity::class.java)
+                startActivity(intent)
+            }
             R.id.action_sort_bday -> {
                 Collections.sort(list, Sorter.bdayComparator)
             }

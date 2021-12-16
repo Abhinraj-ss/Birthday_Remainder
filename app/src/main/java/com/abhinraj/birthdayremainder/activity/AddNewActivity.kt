@@ -174,8 +174,6 @@ class AddNewActivity : AppCompatActivity() {
 
             }
 
-
-
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -206,16 +204,7 @@ class AddNewActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
     }*/
-    /*class BirthdaysAsync(context: Context) : AsyncTask<Void, Void, <BirthdayEntity>>() {
 
-        val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
-
-        override fun doInBackground(vararg params: Void?): <BirthdayEntity> {
-
-            return db.birthdayDao().getAllBirthdays()
-        }
-
-    }*/
 
 }
 
