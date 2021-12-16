@@ -105,7 +105,9 @@ class AddNewActivity : AppCompatActivity() {
             var dob = etDob.getText().toString()+" 00:00:00"
             if (dob[1].toString() == "/")
                 dob = "0"+dob
-
+            if (dob[4].toString() == "/")
+                dob = dob.substring(0,3)+"0"+dob.substring(3)
+            System.out.println(dob)
             val dobList = dob.split("/"," ",":").toList()
             val currentList = currentDate.split("/"," ",":").toList()
             val diffList= arrayListOf<Int>()
