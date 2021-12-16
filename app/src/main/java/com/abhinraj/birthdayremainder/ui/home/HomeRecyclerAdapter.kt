@@ -30,7 +30,7 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
     override fun onBindViewHolder(holder: UpBirthdaysViewHolder, position: Int) {
             val bdayObject = birthdays[position]
             holder.name.text = bdayObject.name
-            holder.dob.text = bdayObject.dob
+            holder.dob.text = bdayObject.dob.subSequence(0,10).toString()
             holder.age.text = bdayObject.age.toString()+"*"
 
 

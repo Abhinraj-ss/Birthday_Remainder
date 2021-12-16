@@ -41,8 +41,8 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
 
-        val ex = Birthdays(1, "Abhin Raj", "06/11/2000", 21,"Male", 20, "minutes")
-        val ex1 = Birthdays(2, "Surabi Suresh", "06/11/2001",20, "Female", 20, "minutes")
+        val ex = Birthdays(1, "Abhin Raj", "06/11/2000"+" 00:00:00", 21,"Male", 20, "minutes")
+        val ex1 = Birthdays(2, "Surabi Suresh", "06/11/2001"+" 00:00:00",20, "Female", 20, "minutes")
         list.add(ex)
         list.add(ex1)
 
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
                     Birthdays(
                         i.id,
                         i.name,
-                        i.dob.subSequence(0,10).toString(),
+                        i.dob,
                         i.age,
                         i.gender,
                         i.time,
