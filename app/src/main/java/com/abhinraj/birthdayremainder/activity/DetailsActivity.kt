@@ -1,9 +1,18 @@
 package com.abhinraj.birthdayremainder.activity
 
+import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NotificationManagerCompat
@@ -12,6 +21,7 @@ import com.abhinraj.birthdayremainder.databinding.ActivityDetailsBinding
 import com.abhinraj.birthdayremainder.util.NotificationHelper
 import java.security.AccessController.getContext
 import java.text.Collator.getInstance
+import java.util.*
 import java.util.Calendar.getInstance
 
 class DetailsActivity : AppCompatActivity() {
@@ -25,6 +35,7 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var txtGender: TextView
     lateinit var txtNotify: TextView
     lateinit var btnNotify: Button
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,10 +74,12 @@ class DetailsActivity : AppCompatActivity() {
         btnNotify.setOnClickListener {
             NotificationHelper.createSampleDataNotification(this)
         }
+
     }
     override fun onSupportNavigateUp(): Boolean {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         return true
     }
+
 }

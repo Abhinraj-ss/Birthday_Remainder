@@ -116,6 +116,7 @@
             android:layout_below="@id/llProfile"
             android:layout_centerHorizontal="true"
             android:text="notify"/>
+
     </RelativeLayout>
 
 </FrameLayout>
