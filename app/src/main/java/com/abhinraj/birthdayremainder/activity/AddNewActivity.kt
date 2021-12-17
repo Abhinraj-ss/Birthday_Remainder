@@ -122,8 +122,10 @@ class AddNewActivity : AppCompatActivity() {
             )
 
             val today = Calendar.getInstance()
-            val now = today.timeInMillis
+            var now = today.timeInMillis
             picker.datePicker.setMinDate(now)
+            picker.datePicker.setMaxDate(now+31540000000)
+
             picker.show()
 
 

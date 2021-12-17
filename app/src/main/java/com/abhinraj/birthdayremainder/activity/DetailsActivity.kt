@@ -55,7 +55,6 @@ class DetailsActivity : AppCompatActivity() {
         txtNotify.text=bundle.getString("notify", "") as String
 
 
-
         NotificationHelper.createNotificationChannel(
             this,
             NotificationManagerCompat.IMPORTANCE_DEFAULT,
