@@ -34,11 +34,11 @@ object NotificationHelper {
             val notificationManager = context.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
-    }
+    }/*
     fun createSampleDataNotification(context: Context){
         // 1
         val channelId = "${context.packageName}-${context.getString(R.string.app_name)}"
-// 2
+        // 2
         val notificationBuilder = NotificationCompat.Builder(context, channelId).apply {
             setSmallIcon(R.drawable.ic_acc_person_default) // 3
             setContentTitle("title") // 4
@@ -61,5 +61,6 @@ object NotificationHelper {
         notificationManager.notify(1001, notificationBuilder.build())
 
     }
+*/
 
 }

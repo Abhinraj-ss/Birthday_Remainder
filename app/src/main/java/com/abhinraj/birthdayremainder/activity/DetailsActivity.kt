@@ -1,10 +1,12 @@
 package com.abhinraj.birthdayremainder.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.databinding.ActivityDetailsBinding
 import com.abhinraj.birthdayremainder.util.NotificationHelper
@@ -24,6 +27,10 @@ import java.security.AccessController.getContext
 import java.text.Collator.getInstance
 import java.util.*
 import java.util.Calendar.getInstance
+import android.os.SystemClock
+
+
+
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -76,17 +83,8 @@ class DetailsActivity : AppCompatActivity() {
             Toast.makeText(this, "Alarm Triggered", Toast.LENGTH_LONG).show()
 
             //NotificationHelper.createSampleDataNotification(this)
+            sendAlarmNotification(this)
 
-            val intent = Intent(this, NotificationReceiver::class.java)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-// 2
-            val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-
-            val alarmManager:AlarmManager =getSystemService(ALARM_SERVICE) as AlarmManager
-            val currentime = System.currentTimeMillis()
-            val ten =  1000*10
-
-            alarmManager.set(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
         }
 
     }
@@ -95,5 +93,18 @@ class DetailsActivity : AppCompatActivity() {
         startActivity(intent)
         return true
     }
+    fun sendAlarmNotification(context: Context){
+        val intent = Intent(this, NotificationReceiver::class.java)
 
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+
+        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val currentime = System.currentTimeMillis()
+        val ten =  1000*10
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
+
+
+    }
 }
