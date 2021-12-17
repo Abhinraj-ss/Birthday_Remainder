@@ -8,17 +8,17 @@
     app:cardBackgroundColor="@color/colorPrimaryLyt"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="10dp"
-    app:cardElevation="8dp"
+    app:cardElevation="4dp"
     app:cardPreventCornerOverlap="true"
     android:clickable="true"
     android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
+        android:divider="#000000"
         android:orientation="horizontal"
-        android:weightSum="8"
-        android:divider="#000000">
+        android:weightSum="8">
 
         <ImageView
             android:id="@+id/imgPerson"
@@ -28,6 +28,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:src="@drawable/ic_acc_person_default" />
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
@@ -36,9 +37,9 @@
             android:background="@color/white" />
 
         <LinearLayout
-            android:layout_width="203dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="vertical"
             android:padding="6dp">
 
@@ -59,8 +60,17 @@
                 android:text="04-12-2000"
                 android:textSize="14sp" />
 
-
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_on"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="3dp"
+            android:src="@drawable/ic_baseline_alarm_on_24" />
 
         <LinearLayout
             android:layout_width="110dp"

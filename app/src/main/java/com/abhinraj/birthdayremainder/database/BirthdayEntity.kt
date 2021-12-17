@@ -11,6 +11,5 @@ data class BirthdayEntity(
     @ColumnInfo(name = "dob") val dob: String,
     @ColumnInfo(name = "age") var age: Int,
     @ColumnInfo(name = "gender") val gender: String,
-    @ColumnInfo(name = "time") val time: Int,
-    @ColumnInfo(name = "unittime") val unittime: String
+    @ColumnInfo(name = "notify") val notify: String
 )

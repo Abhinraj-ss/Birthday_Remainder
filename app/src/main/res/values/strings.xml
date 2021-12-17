@@ -9,7 +9,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="upcoming_birthdays">Upcoming birthdays</string>
+    <string name="upcoming_birthdays">Upcoming birthday profiles</string>
     <string name="calendar">Calendar</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_details">SettingsActivity</string>
@@ -45,10 +45,10 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="enter_name">Enter Name</string>
-    <string name="add">ADD</string>
+    <string name="add">ADD PROFILE</string>
     <string name="dob">DOB(dd/mm/yyyy)</string>
     <string name="mins_or_hours_or_days_or_weeks">mins or hours or days or weeks</string>
-    <string name="notify_me_before">Notify me before</string>
+    <string name="notify_me_on">Notify me on</string>
     <string name="gender">Gender :</string>
     <string name="filter">Filter</string>
     <string name="birthday">Birthday</string>
@@ -56,6 +56,7 @@
     <string name="age_l_h">By Age(Low-High)</string>
     <string name="age_h_l">By Age(High-Low)</string>
     <string name="by_birthday">By Birthday</string>
+    <string name="select_date_time"><![CDATA[Select Date & Time]]></string>
     <string-array name="time_array">
         <item>Select</item>
         <item>Minutes</item>

@@ -31,7 +31,7 @@ class AddNewActivity : AppCompatActivity() {
     lateinit var picker: DatePickerDialog
     lateinit var gender: Spinner
     lateinit var time: EditText
-    lateinit var unittime: Spinner
+    lateinit var etNotify: EditText
     lateinit var btnAdd:Button
     var age by Delegates.notNull<Int>()
     private var day by Delegates.notNull<Int>()
@@ -63,8 +63,7 @@ class AddNewActivity : AppCompatActivity() {
         etDob=findViewById(R.id.etDob)
         etDob.inputType = InputType.TYPE_NULL
         gender=findViewById(R.id.spGender)
-        time = findViewById(R.id.etNotify)
-        unittime =findViewById(R.id.spTime)
+        etNotify =findViewById(R.id.etNotify)
         btnAdd=findViewById(R.id.btnAdd)
 
         etDob.setOnClickListener(View.OnClickListener {
@@ -92,14 +91,39 @@ class AddNewActivity : AppCompatActivity() {
             picker.show()
 
         })
+        etNotify.setOnClickListener(View.OnClickListener {
 
+            this.currentFocus?.let { view ->
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.hideSoftInputFromWindow(view.windowToken, 0)
+            }
+            val cldr: Calendar = Calendar.getInstance()
+            day = cldr.get(Calendar.DAY_OF_MONTH)
+            month = cldr.get(Calendar.MONTH)
+            year = cldr.get(Calendar.YEAR)
+            // date picker dialog
 
+            picker = DatePickerDialog(
+                this,
+                { view, year, monthOfYear, dayOfMonth -> etNotify.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year) },
+                year,
+                month,
+                day
+            )
+            val today = Calendar.getInstance()
+            val now = today.timeInMillis
+            picker.datePicker.setMaxDate(now)
+            picker.show()
+
+        })
+
+/*
         unittime.setOnTouchListener(OnTouchListener { v, event ->
             val imm =
                 applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
             false
-        })
+        })*/
         btnAdd.setOnClickListener {
 
             var dob = etDob.getText().toString()+" 00:00:00"
@@ -155,8 +179,7 @@ class AddNewActivity : AppCompatActivity() {
                 dob,
                 age,
                 gender.getSelectedItem().toString(),
-                time.text.toString().toInt(),
-                unittime.getSelectedItem().toString()
+                etNotify.getText().toString()
             )
             System.out.println(birthdayEntity)
 

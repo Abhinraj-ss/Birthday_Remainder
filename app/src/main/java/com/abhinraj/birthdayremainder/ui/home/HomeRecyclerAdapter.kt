@@ -48,7 +48,7 @@ class HomeRecyclerAdapter(val context: Context, val birthdays: ArrayList<Birthda
             args.putString("age", bdayObject.age.toString()+" year(s)")
             args.putString("dob", bdayObject.dob)
             args.putString("gender", bdayObject.gender)
-            args.putString("time", bdayObject.time.toString()+" "+bdayObject.unittime)
+            args.putString("notify", bdayObject.notify)
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra("data",args)
             startActivity(context,intent,args)

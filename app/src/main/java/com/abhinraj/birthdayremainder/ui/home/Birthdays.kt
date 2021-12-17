@@ -6,8 +6,7 @@ data class Birthdays(
     val dob: String,
     val age: Int,
     val gender: String,
-    val time: Int,
-    val unittime: String
+    val notify: String
 )
 
 

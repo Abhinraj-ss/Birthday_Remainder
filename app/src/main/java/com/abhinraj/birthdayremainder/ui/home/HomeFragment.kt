@@ -45,8 +45,8 @@ class HomeFragment : Fragment() {
 
 
 
-        val ex = Birthdays(1, "Abhin Raj", "06/11/2000"+" 00:00:00", 21,"Male", 20, "minutes")
-        val ex1 = Birthdays(2, "Surabi Suresh", "06/11/2001"+" 00:00:00",20, "Female", 20, "minutes")
+        val ex = Birthdays(1, "Abhin Raj", "06/11/2000"+" 00:00:00", 21,"Male",  "01/11/2022"+" 00:00:00")
+        val ex1 = Birthdays(2, "Surabi Suresh", "06/11/2001"+" 00:00:00",20, "Female",  "01/11/2022"+" 00:00:00")
         list.add(ex)
         list.add(ex1)
 
@@ -117,8 +117,7 @@ class HomeFragment : Fragment() {
                         i.dob,
                         i.age,
                         i.gender,
-                        i.time,
-                        i.unittime
+                        i.notify
                     )
                 )
             }
