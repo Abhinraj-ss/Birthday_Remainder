@@ -19,7 +19,6 @@ class Sorter {
            val currentDate= LocalDate.now().dayOfMonth
            val dob1 :String
            val dob2 :String
-
            if (bday1.dob.substring(3,5).toInt() < currentMonth.value || bday1.dob.substring(0,2).toInt() < currentDate){
                dob1 = bday1.dob.substring(0,6)+currentYear.plus(1)+bday1.dob.substring(10)
            }
@@ -27,15 +26,14 @@ class Sorter {
                dob1 = bday1.dob.substring(0,6)+currentYear+bday1.dob.substring(10)
 
            }
+
            if (bday2.dob.substring(3,5).toInt() < currentMonth.value || bday2.dob.substring(0,2).toInt() < currentDate){
                dob2 = bday2.dob.substring(0,6)+currentYear.plus(1)+bday2.dob.substring(10)
            }
            else{
                dob2 = bday2.dob.substring(0,6)+currentYear+bday2.dob.substring(10)
 
-           }/*
-           System.out.println("${currentYear }${ bday1.dob } ${ bday2.dob }")
-           System.out.println("${currentYear } ${ dob1} ${ dob2 }")*/
+           }
 
            val diffOne: LocalDate? =LocalDate.parse(dob1,sdf)
             val diffTwo: LocalDate? = LocalDate.parse(dob2,sdf)

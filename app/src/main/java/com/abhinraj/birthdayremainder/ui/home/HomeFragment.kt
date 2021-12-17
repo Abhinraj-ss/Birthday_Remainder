@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
         val backgroundList = BirthdaysAsync(activity as Context).execute().get()
 
         for (i in backgroundList){
-
+            System.out.println(i.dob)
             val dobList = i.dob.split("/"," ",":").toList()
             val currentList = currentDate.split("/"," ",":").toList()
             val diffList= arrayListOf<Int>()

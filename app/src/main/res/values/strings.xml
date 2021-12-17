@@ -56,7 +56,8 @@
     <string name="age_l_h">By Age(Low-High)</string>
     <string name="age_h_l">By Age(High-Low)</string>
     <string name="by_birthday">By Birthday</string>
-    <string name="select_date_time"><![CDATA[Select Date & Time]]></string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
     <string-array name="time_array">
         <item>Select</item>
         <item>Minutes</item>

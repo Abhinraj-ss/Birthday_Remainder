@@ -2,6 +2,7 @@ package com.abhinraj.birthdayremainder.activity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -29,14 +30,19 @@ class AddNewActivity : AppCompatActivity() {
     lateinit var etName: EditText
     lateinit var etDob : EditText
     lateinit var picker: DatePickerDialog
+    lateinit var picker1: TimePickerDialog
     lateinit var gender: Spinner
-    lateinit var time: EditText
     lateinit var etNotify: EditText
+    lateinit var etNotifyTime: EditText
+
     lateinit var btnAdd:Button
     var age by Delegates.notNull<Int>()
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
     var year by Delegates.notNull<Int>()
+    var hour by Delegates.notNull<Int>()
+    var minute by Delegates.notNull<Int>()
+
     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
     val currentDate = sdf.format(Date())
 
@@ -64,6 +70,7 @@ class AddNewActivity : AppCompatActivity() {
         etDob.inputType = InputType.TYPE_NULL
         gender=findViewById(R.id.spGender)
         etNotify =findViewById(R.id.etNotify)
+        etNotifyTime = findViewById(R.id.etNotifyTime)
         btnAdd=findViewById(R.id.btnAdd)
 
         etDob.setOnClickListener(View.OnClickListener {
@@ -80,7 +87,7 @@ class AddNewActivity : AppCompatActivity() {
 
             picker = DatePickerDialog(
                 this,
-                { view, year, monthOfYear, dayOfMonth -> etDob.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year) },
+                { view, year, monthOfYear, dayOfMonth -> etDob.setText(String.format("%02d/%02d/%04d",dayOfMonth , (monthOfYear + 1) , year)) },
                 year,
                 month,
                 day
@@ -91,6 +98,9 @@ class AddNewActivity : AppCompatActivity() {
             picker.show()
 
         })
+
+
+
         etNotify.setOnClickListener(View.OnClickListener {
 
             this.currentFocus?.let { view ->
@@ -105,32 +115,46 @@ class AddNewActivity : AppCompatActivity() {
 
             picker = DatePickerDialog(
                 this,
-                { view, year, monthOfYear, dayOfMonth -> etNotify.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year) },
+                { view, year, monthOfYear, dayOfMonth -> etNotify.setText(String.format("%02d/%02d/%04d",dayOfMonth , (monthOfYear + 1) , year)) },
                 year,
                 month,
                 day
             )
+
             val today = Calendar.getInstance()
             val now = today.timeInMillis
-            picker.datePicker.setMaxDate(now)
+            picker.datePicker.setMinDate(now)
             picker.show()
+
+
 
         })
 
-/*
-        unittime.setOnTouchListener(OnTouchListener { v, event ->
-            val imm =
-                applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
-            false
-        })*/
+        etNotifyTime.setOnClickListener {
+            this.currentFocus?.let { view ->
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.hideSoftInputFromWindow(view.windowToken, 0)
+            }
+
+            val cldr: Calendar = Calendar.getInstance()
+            hour = cldr.get(Calendar.HOUR_OF_DAY)
+            minute = cldr.get(Calendar.MINUTE)
+            //time picker dialog
+            picker1 = TimePickerDialog(
+                this,
+                {view,hourOfDay,minute->etNotifyTime.setText(String.format("%02d:%02d",hourOfDay,minute))},hour,minute,true
+            )
+            picker1.show()
+
+        }
+
         btnAdd.setOnClickListener {
 
-            var dob = etDob.getText().toString()+" 00:00:00"
-            if (dob[1].toString() == "/")
-                dob = "0"+dob
-            if (dob[4].toString() == "/")
-                dob = dob.substring(0,3)+"0"+dob.substring(3)
+            val dob = etDob.getText().toString()+" 00:00:00"
+
+            val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
+
+
             System.out.println(dob)
             val dobList = dob.split("/"," ",":").toList()
             val currentList = currentDate.split("/"," ",":").toList()
@@ -172,14 +196,13 @@ class AddNewActivity : AppCompatActivity() {
                 age-=1
             }
 
-
             val birthdayEntity = BirthdayEntity(
                 backgroundList.size,
                 etName.getText().toString(),
                 dob,
                 age,
                 gender.getSelectedItem().toString(),
-                etNotify.getText().toString()
+                notify
             )
             System.out.println(birthdayEntity)
 
@@ -223,6 +246,7 @@ class AddNewActivity : AppCompatActivity() {
       startActivity(intent)
       return true
     }
+
 /* for exiting the app
     override fun onBackPressed() {
         super.onBackPressed()
