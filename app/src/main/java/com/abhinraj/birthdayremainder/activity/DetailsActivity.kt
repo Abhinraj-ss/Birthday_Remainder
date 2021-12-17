@@ -19,6 +19,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.databinding.ActivityDetailsBinding
 import com.abhinraj.birthdayremainder.util.NotificationHelper
+import com.abhinraj.birthdayremainder.util.NotificationReceiver
 import java.security.AccessController.getContext
 import java.text.Collator.getInstance
 import java.util.*
@@ -72,7 +73,20 @@ class DetailsActivity : AppCompatActivity() {
 
 
         btnNotify.setOnClickListener {
-            NotificationHelper.createSampleDataNotification(this)
+            Toast.makeText(this, "Alarm Triggered", Toast.LENGTH_LONG).show()
+
+            //NotificationHelper.createSampleDataNotification(this)
+
+            val intent = Intent(this, NotificationReceiver::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+// 2
+            val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+
+            val alarmManager:AlarmManager =getSystemService(ALARM_SERVICE) as AlarmManager
+            val currentime = System.currentTimeMillis()
+            val ten =  1000*10
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
         }
 
     }
