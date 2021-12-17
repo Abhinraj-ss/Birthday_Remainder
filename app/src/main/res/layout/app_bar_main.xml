@@ -29,7 +29,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:fabSize="normal"
-        app:borderWidth="0dp"
+        app:borderWidth="3dp"
         app:elevation="7dp"
         android:backgroundTint="@color/white"
         android:scaleType="center"
