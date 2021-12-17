@@ -43,9 +43,10 @@ class AddNewActivity : AppCompatActivity() {
     var hour by Delegates.notNull<Int>()
     var minute by Delegates.notNull<Int>()
 
+    @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
     val currentDate = sdf.format(Date())
-
+    var isAllFieldsChecked : Boolean = false
 
 
 
@@ -151,109 +152,107 @@ class AddNewActivity : AppCompatActivity() {
         }
 
         btnAdd.setOnClickListener {
-
-            val dob = etDob.getText().toString()+" 00:00:00"
-
-            val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
-
-
-            System.out.println(dob)
-            val dobList = dob.split("/"," ",":").toList()
-            val currentList = currentDate.split("/"," ",":").toList()
-            val diffList= arrayListOf<Int>()
-            for (i in 0..5){
-                diffList.add(currentList[i].toInt() -dobList[i].toInt())
-            }
-
-            age = diffList[2]
+            isAllFieldsChecked = checkAllFields()
+            if (isAllFieldsChecked){
+                val dob = etDob.getText().toString()+" 00:00:00"
+                val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
 
 
-            System.out.println("${diffList[2]}"+" "+ "${diffList[1]}"+" "+ "${diffList[0]}"+" "+ "${diffList[3]}"+" "+ "${diffList[4]}"+" "+"${diffList[5]}")
+                System.out.println(dob)
+                val dobList = dob.split("/"," ",":").toList()
+                val currentList = currentDate.split("/"," ",":").toList()
+                val diffList= arrayListOf<Int>()
+                for (i in 0..5){
+                    diffList.add(currentList[i].toInt() -dobList[i].toInt())
+                }
+                age = diffList[2]
 
-
-            if (diffList[1]==0){
-                if (diffList[0]==0){
-                    if (diffList[3]==0){
-                        if (diffList[4]==0){
-                            if (diffList[5]==0&& month==12 && day==31){
-                                age+=1
+                if (diffList[1]==0){
+                    if (diffList[0]==0){
+                        if (diffList[3]==0){
+                            if (diffList[4]==0){
+                                if (diffList[5]==0&& month==12 && day==31){
+                                    age+=1
+                                }
+                                else if(diffList[5]<0){
+                                    age-=1
+                                }
                             }
-                            else if(diffList[5]<0){
+                            else if(diffList[4]<0){
                                 age-=1
                             }
                         }
-                        else if(diffList[4]<0){
+                        else if(diffList[3]<0){
                             age-=1
                         }
                     }
-                    else if(diffList[3]<0){
+                    else if(diffList[0]<0){
                         age-=1
                     }
                 }
-                else if(diffList[0]<0){
+                else if(diffList[1]<0){
                     age-=1
                 }
-            }
-            else if(diffList[1]<0){
-                age-=1
-            }
 
-            val birthdayEntity = BirthdayEntity(
-                backgroundList.size,
-                etName.getText().toString(),
-                dob,
-                age,
-                gender.getSelectedItem().toString(),
-                notify
-            )
-            System.out.println(birthdayEntity)
+                val birthdayEntity = BirthdayEntity(
+                    backgroundList.size,
+                    etName.getText().toString(),
+                    dob,
+                    age,
+                    gender.getSelectedItem().toString(),
+                    notify
+                )
+                System.out.println(birthdayEntity)
 
-            if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute().get()) {
-                val async =
-                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
-                val result = async.get()
-                if (result) {
-                    Toast.makeText(
-                        applicationContext,
-                        "Added Successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute().get()) {
+                    val async =
+                        HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
+                    val result = async.get()
+                    if (result) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Added Successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 }
 
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
 
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
         }
     }
 
-  /*  fun onItemSelected(arg0: AdapterView<*>?, arg1: View?, position: Int, id: Long) {
-        Toast.makeText(
-            applicationContext,
-            "Selected User: " + users.get(position),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    fun onNothingSelected(arg0: AdapterView<*>?) {
-       Toast.makeText(
-            this@AddNewActivity,
-            "Field cannot be empty",
-            Toast.LENGTH_SHORT
-        ).show()
-    }*/
     override fun onSupportNavigateUp(): Boolean {
       val intent = Intent(this, MainActivity::class.java)
       startActivity(intent)
       return true
     }
+    private fun checkAllFields():Boolean {
+        if (etName.length() == 0) {
+            etName.setError("Specify the Name");
+            return false;
+        }
 
-/* for exiting the app
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }*/
+        if (etDob.length() == 0) {
+            etDob.setError("Specify the DOB");
+            return false;
+        }
 
+        if (etNotify.length() == 0) {
+            etNotify.setError(" Specify the Date");
+            return false;
+        }
+        if (etNotifyTime.length() == 0) {
+            etNotifyTime.setError("Specify the Time");
+            return false;
+        }
+        // after all validation return true.
+        return true;
+    }
 
 }
 
