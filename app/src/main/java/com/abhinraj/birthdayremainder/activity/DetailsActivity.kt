@@ -29,7 +29,6 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var txtAge: TextView
     lateinit var txtGender: TextView
     lateinit var txtNotify: TextView
-    lateinit var btnNotify: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +46,6 @@ class DetailsActivity : AppCompatActivity() {
         txtDob = findViewById(R.id.txtDob)
         txtGender = findViewById(R.id.txtGender)
         txtNotify = findViewById(R.id.txtNotify)
-        btnNotify = findViewById(R.id.btnNotify)
         txtName.text=bundle!!.getString("name", "") as String
         txtAge.text=bundle.getString("age", "") as String
         txtDob.text=(bundle.getString("dob", "") as String).subSequence(0,10).toString()
@@ -55,39 +53,10 @@ class DetailsActivity : AppCompatActivity() {
         txtNotify.text=bundle.getString("notify", "") as String
 
 
-        NotificationHelper.createNotificationChannel(
-            this,
-            NotificationManagerCompat.IMPORTANCE_DEFAULT,
-            false,
-            getString(R.string.app_name),
-            "App notification channel."
-        )
-
-
-        btnNotify.setOnClickListener {
-            Toast.makeText(this, "Alarm Triggered", Toast.LENGTH_LONG).show()
-            sendAlarmNotification(this)
-
-        }
-
     }
     override fun onSupportNavigateUp(): Boolean {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         return true
-    }
-    fun sendAlarmNotification(context: Context){
-        val intent = Intent(this, NotificationReceiver::class.java)
-
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-
-        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-
-        val currentime = System.currentTimeMillis()
-        val ten =  1000*10
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
-
-
     }
 }

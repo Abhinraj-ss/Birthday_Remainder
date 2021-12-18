@@ -1,7 +1,9 @@
 package com.abhinraj.birthdayremainder.activity
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -22,7 +24,10 @@ import java.util.*
 import kotlin.properties.Delegates
 
 import android.view.View.OnTouchListener
+import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
+import com.abhinraj.birthdayremainder.util.NotificationHelper
+import com.abhinraj.birthdayremainder.util.NotificationReceiver
 
 
 class AddNewActivity : AppCompatActivity() {
@@ -154,6 +159,15 @@ class AddNewActivity : AppCompatActivity() {
         btnAdd.setOnClickListener {
             isAllFieldsChecked = checkAllFields()
             if (isAllFieldsChecked){
+                // creates a notification channel
+                NotificationHelper.createNotificationChannel(
+                    this,
+                    NotificationManagerCompat.IMPORTANCE_DEFAULT,
+                    false,
+                    getString(R.string.app_name),
+                    "App notification channel."
+                )
+
                 val dob = etDob.getText().toString()+" 00:00:00"
                 val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
 
@@ -217,7 +231,11 @@ class AddNewActivity : AppCompatActivity() {
                     }
 
                 }
+                Toast.makeText(this,
+                    "Alarm Triggered",
+                    Toast.LENGTH_LONG).show()
 
+                sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString())
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -253,7 +271,25 @@ class AddNewActivity : AppCompatActivity() {
         // after all validation return true.
         return true;
     }
+    fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String){
+        val intent = Intent(this, NotificationReceiver::class.java).apply{
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("name",name)
+            putExtra("age",age)
+            putExtra("gender",gender)
+        }
 
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+
+        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val currentime = System.currentTimeMillis()
+        val ten =  1000*10
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
+
+
+    }
 }
 
 
