@@ -31,9 +31,9 @@ import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.util.NotificationHelper
 import com.abhinraj.birthdayremainder.util.NotificationReceiver
 import android.widget.TextView
-
-
-
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 
 
 class AddNewActivity : AppCompatActivity() {
@@ -56,6 +56,8 @@ class AddNewActivity : AppCompatActivity() {
 
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    @RequiresApi(Build.VERSION_CODES.O)
+    val sd:DateTimeFormatter= ofPattern("dd/MM/yyyy HH:mm")
     val currentDate = sdf.format(Date())
     var isAllFieldsChecked : Boolean = false
 
@@ -173,14 +175,19 @@ class AddNewActivity : AppCompatActivity() {
             isAllFieldsChecked = checkAllFields()
             if (isAllFieldsChecked){
 
-
                 val dob = etDob.getText().toString()+" 00:00:00"
                 val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
-
-
-                System.out.println(dob)
+                val date1 = Calendar.getInstance()
+                val date2 = Calendar.getInstance()
                 val dobList = dob.split("/"," ",":").toList()
                 val currentList = currentDate.split("/"," ",":").toList()
+                val notifyList = notify.split("/"," ",":").toList()
+                date1.clear()
+                date1.set(notifyList[2].toInt(),notifyList[1].toInt(),notifyList[0].toInt())
+                date2.clear()
+                date2.set(currentList[2].toInt(),dobList[1].toInt(),dobList[0].toInt())
+                val diff = date2.timeInMillis - date1.timeInMillis
+                System.out.println(diff)
                 val diffList= arrayListOf<Int>()
                 for (i in 0..5){
                     diffList.add(currentList[i].toInt() -dobList[i].toInt())
@@ -233,7 +240,7 @@ class AddNewActivity : AppCompatActivity() {
                     "Alarm Triggered",
                     Toast.LENGTH_LONG).show()
 
-                sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString())
+                sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString(),diff.toInt())
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -276,13 +283,16 @@ class AddNewActivity : AppCompatActivity() {
         // after all validation return true.
         return true;
     }
-    private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String){
-        val intent = Intent(this, NotificationReceiver::class.java).apply{
+    private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String,noOfmillis:Int){
+        val noOfDays =noOfmillis.toFloat() / (24 * 60 * 60 * 1000)
+        val intent = Intent(this.applicationContext, NotificationReceiver::class.java).apply{
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("name",name)
             putExtra("age",age)
             putExtra("gender",gender)
+            putExtra("days",noOfDays.toInt())
         }
+        System.out.println("${name} ${age} ${gender} ${noOfDays}")
 
         val pendingIntent = getBroadcast(context.applicationContext, 0, intent, 0)
 

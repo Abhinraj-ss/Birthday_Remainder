@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
         val backgroundList = BirthdaysAsync(activity as Context).execute().get()
 
         for (i in backgroundList){
-            System.out.println(i.dob)
+            //System.out.println(i.dob)
             val dobList = i.dob.split("/"," ",":").toList()
             val currentList = currentDate.split("/"," ",":").toList()
             val diffList= arrayListOf<Int>()
@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
             var age = diffList[2]
 
 
-            println("${diffList[2]}"+" "+ "${diffList[1]}"+" "+ "${diffList[0]}"+" "+ "${diffList[3]}"+" "+ "${diffList[4]}"+" "+"${diffList[5]}")
+           // println("${diffList[2]}"+" "+ "${diffList[1]}"+" "+ "${diffList[0]}"+" "+ "${diffList[3]}"+" "+ "${diffList[4]}"+" "+"${diffList[5]}")
 
 
             if (diffList[1]==0){

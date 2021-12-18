@@ -1,6 +1,6 @@
 package com.abhinraj.birthdayremainder.util
 
-import android.app.Notification
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -12,11 +12,15 @@ import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.MainActivity
 
 class NotificationReceiver : BroadcastReceiver() {
+    @SuppressLint("WrongConstant", "UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context?, intent: Intent?) {
         val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)}"
         val name = intent?.getStringExtra("name")
         val age = intent?.getIntExtra("age",0)
         val gender = intent?.getStringExtra("gender")
+        val noOfDays= intent?.getIntExtra("days", 0)
+        System.out.println("${name} ${age} ${gender} ${noOfDays}")
+        val s = intent?.flags
         var pronoun =""
         if (gender=="Male"){
             pronoun="his"
@@ -28,19 +32,20 @@ class NotificationReceiver : BroadcastReceiver() {
         val notificationBuilder =NotificationCompat.Builder(context, channelId).apply {
             setSmallIcon(R.drawable.ic_baseline_cake_24)
             if (age != null) {
-                setContentTitle("${name} is about to ${age+1}.")
+                setContentTitle("${name} is going to be ${age+1} in next ${noOfDays} days.")
             }
             setContentText("message")
-            setStyle(NotificationCompat.BigTextStyle().bigText("Lets' make ${pronoun} birthday memorable."))
+            setStyle(NotificationCompat.BigTextStyle().bigText("Make ${pronoun} birthday memorable."))
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
+            setOnlyAlertOnce(true)
             setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
             setContentIntent(
                 PendingIntent.getActivity(
                     context, // Context from onReceive method.
                     0,
                     Intent(context, MainActivity::class.java), // Activity you want to launch onClick.
-                    0
+                    s!!
                 ))
         }
             val notificationManager = NotificationManagerCompat.from(context)
