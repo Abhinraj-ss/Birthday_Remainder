@@ -1,12 +1,10 @@
 package com.abhinraj.birthdayremainder.util
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.media.audiofx.Equalizer
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -15,6 +13,7 @@ import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.MainActivity
 import android.os.SystemClock
 import android.os.SystemClock.elapsedRealtime
+import android.provider.Settings
 
 
 object NotificationHelper {
@@ -29,6 +28,7 @@ object NotificationHelper {
             val channel = NotificationChannel(channelId, name, importance)
             channel.description = description
             channel.setShowBadge(showBadge)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
 
             // 3
             val notificationManager = context.getSystemService(NotificationManager::class.java)

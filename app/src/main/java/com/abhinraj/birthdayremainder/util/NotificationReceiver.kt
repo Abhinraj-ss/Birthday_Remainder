@@ -1,20 +1,22 @@
 package com.abhinraj.birthdayremainder.util
 
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.MainActivity
 
 class NotificationReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context?, p1: Intent?) {
+    override fun onReceive(context: Context?, intent: Intent?) {
         val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)}"
-        val name = p1?.getStringExtra("name")
-        val age = p1?.getIntExtra("age",0)
-        val gender = p1?.getStringExtra("gender")
+        val name = intent?.getStringExtra("name")
+        val age = intent?.getIntExtra("age",0)
+        val gender = intent?.getStringExtra("gender")
         var pronoun =""
         if (gender=="Male"){
             pronoun="his"
@@ -32,6 +34,7 @@ class NotificationReceiver : BroadcastReceiver() {
             setStyle(NotificationCompat.BigTextStyle().bigText("Make ${pronoun} birthday memorable."))
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
+            setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
             setContentIntent(
                 PendingIntent.getActivity(
                     context, // Context from onReceive method.

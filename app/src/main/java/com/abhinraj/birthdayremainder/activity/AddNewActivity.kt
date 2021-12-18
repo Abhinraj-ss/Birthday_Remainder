@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.DatePickerDialog
 import android.app.PendingIntent
+import android.app.PendingIntent.*
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -28,6 +30,10 @@ import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.util.NotificationHelper
 import com.abhinraj.birthdayremainder.util.NotificationReceiver
+import android.widget.TextView
+
+
+
 
 
 class AddNewActivity : AppCompatActivity() {
@@ -79,6 +85,13 @@ class AddNewActivity : AppCompatActivity() {
         etNotifyTime = findViewById(R.id.etNotifyTime)
         btnAdd=findViewById(R.id.btnAdd)
 
+        NotificationHelper.createNotificationChannel(
+            this,
+            NotificationManagerCompat.IMPORTANCE_HIGH,
+            true,
+            getString(R.string.app_name),
+            "App notification channel."
+        )
         etDob.setOnClickListener(View.OnClickListener {
 
             this.currentFocus?.let { view ->
@@ -128,7 +141,7 @@ class AddNewActivity : AppCompatActivity() {
             )
 
             val today = Calendar.getInstance()
-            var now = today.timeInMillis
+            val now = today.timeInMillis
             picker.datePicker.setMinDate(now)
             picker.datePicker.setMaxDate(now+31540000000)
 
@@ -159,14 +172,7 @@ class AddNewActivity : AppCompatActivity() {
         btnAdd.setOnClickListener {
             isAllFieldsChecked = checkAllFields()
             if (isAllFieldsChecked){
-                // creates a notification channel
-                NotificationHelper.createNotificationChannel(
-                    this,
-                    NotificationManagerCompat.IMPORTANCE_DEFAULT,
-                    false,
-                    getString(R.string.app_name),
-                    "App notification channel."
-                )
+
 
                 val dob = etDob.getText().toString()+" 00:00:00"
                 val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
@@ -222,14 +228,6 @@ class AddNewActivity : AppCompatActivity() {
                     val async =
                         HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
                     val result = async.get()
-                    if (result) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Added Successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
                 }
                 Toast.makeText(this,
                     "Alarm Triggered",
@@ -251,21 +249,28 @@ class AddNewActivity : AppCompatActivity() {
     }
     private fun checkAllFields():Boolean {
         if (etName.length() == 0) {
-            etName.setError("Specify the Name");
+            etName.setError("Specify the Name")
             return false;
         }
 
         if (etDob.length() == 0) {
-            etDob.setError("Specify the DOB");
+            etDob.setError("Specify the DOB")
+            return false;
+        }
+        val errorText = gender.getSelectedView() as TextView
+
+        if (gender.selectedItem.toString()== "Select") {
+
+            errorText.error = ""
             return false;
         }
 
         if (etNotify.length() == 0) {
-            etNotify.setError(" Specify the Date");
+            etNotify.setError(" Specify the Date")
             return false;
         }
         if (etNotifyTime.length() == 0) {
-            etNotifyTime.setError("Specify the Time");
+            etNotifyTime.setError("Specify the Time")
             return false;
         }
         // after all validation return true.
@@ -273,20 +278,21 @@ class AddNewActivity : AppCompatActivity() {
     }
     fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String){
         val intent = Intent(this, NotificationReceiver::class.java).apply{
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
             putExtra("name",name)
             putExtra("age",age)
             putExtra("gender",gender)
         }
 
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        val pendingIntent = getBroadcast(context.applicationContext, 0, intent, 0)
 
-        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val currentime = System.currentTimeMillis()
         val ten =  1000*10
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
 
 
     }
