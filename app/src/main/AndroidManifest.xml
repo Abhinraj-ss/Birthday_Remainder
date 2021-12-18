@@ -48,7 +48,14 @@
 
             </intent-filter>
         </activity>
-        <receiver android:name=".util.NotificationReceiver"/>
+        <receiver android:name=".util.NotificationReceiver"
+            android:exported="true"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

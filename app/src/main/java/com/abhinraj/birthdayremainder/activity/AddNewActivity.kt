@@ -276,10 +276,9 @@ class AddNewActivity : AppCompatActivity() {
         // after all validation return true.
         return true;
     }
-    fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String){
+    private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String){
         val intent = Intent(this, NotificationReceiver::class.java).apply{
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
             putExtra("name",name)
             putExtra("age",age)
             putExtra("gender",gender)
@@ -290,7 +289,7 @@ class AddNewActivity : AppCompatActivity() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val currentime = System.currentTimeMillis()
-        val ten =  1000*10
+        val ten =  1000*20
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
 

@@ -31,7 +31,7 @@ class NotificationReceiver : BroadcastReceiver() {
                 setContentTitle("${name} is about to ${age+1}.")
             }
             setContentText("message")
-            setStyle(NotificationCompat.BigTextStyle().bigText("Make ${pronoun} birthday memorable."))
+            setStyle(NotificationCompat.BigTextStyle().bigText("Lets' make ${pronoun} birthday memorable."))
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
             setSound(Settings.System.DEFAULT_NOTIFICATION_URI)

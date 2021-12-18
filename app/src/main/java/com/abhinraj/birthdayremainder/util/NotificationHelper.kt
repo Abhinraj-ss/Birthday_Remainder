@@ -1,5 +1,6 @@
 package com.abhinraj.birthdayremainder.util
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
@@ -19,7 +20,8 @@ import android.provider.Settings
 object NotificationHelper {
 
 
-    fun createNotificationChannel(context: Context, importance: Int, showBadge: Boolean, name: String, description: String) {
+     @SuppressLint("WrongConstant")
+     fun createNotificationChannel(context: Context, importance: Int, showBadge: Boolean, name: String, description: String) {
         // 1
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
