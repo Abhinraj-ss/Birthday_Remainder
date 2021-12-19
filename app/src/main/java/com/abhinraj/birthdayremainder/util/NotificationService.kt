@@ -57,8 +57,9 @@ class NotificationService: Service() {
                 ))
         }
         val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(1001, notificationBuilder.build())
-        return START_STICKY
+        //notificationManager.notify(1001, notificationBuilder.build())
+        startForeground(1001, notificationBuilder.build())
+        return START_NOT_STICKY
     }
 
 

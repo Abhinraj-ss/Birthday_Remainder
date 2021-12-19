@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.MainActivity
 
@@ -17,12 +18,12 @@ import com.abhinraj.birthdayremainder.activity.MainActivity
 
 class NotificationReceiver : BroadcastReceiver() {
     @SuppressLint("WrongConstant", "UnsafeProtectedBroadcastReceiver", "ResourceAsColor")
-    override fun onReceive(context: Context?, intent: Intent) {
+    override fun onReceive(context: Context, intent: Intent) {
         val args:Bundle= intent.getBundleExtra("data")
         val notification = Intent(context, NotificationService::class.java).apply{
             putExtra("data",args)
         }
-        context!!.startService(notification)
+        ContextCompat.startForegroundService(context,notification)
         /*
 val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)}"
         val name = intent.getStringExtra("name")

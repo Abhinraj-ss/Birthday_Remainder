@@ -22,10 +22,10 @@
 
         <ImageView
             android:id="@+id/imgAlarm"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="160dip"
+            android:layout_height="160dip"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="70dip"
             android:src="@drawable/ic_baseline_add_alarm_24" />
 
         <EditText
@@ -38,7 +38,7 @@
             android:layout_marginRight="12dip"
             android:background="@drawable/_edit_text"
             android:drawableStart="@drawable/ic_baseline_account_circle_24"
-            android:drawablePadding="3dp"
+            android:drawablePadding="3dip"
             android:hint="@string/enter_name"
             android:imeOptions="actionDone"
             android:inputType="textCapWords"
@@ -58,7 +58,7 @@
             android:background="@drawable/_edit_text"
             android:clickable="false"
             android:drawableStart="@drawable/ic_calendar"
-            android:drawablePadding="3dp"
+            android:drawablePadding="3dip"
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="true"
@@ -83,10 +83,10 @@
             <TextView
                 android:id="@+id/txtGender"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="4dp"
-                android:padding="6dp"
+                android:layout_height="40dip"
+                android:layout_marginTop="6dip"
+                android:layout_marginEnd="4dip"
+                android:padding="6dip"
                 android:text="@string/gender"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -95,8 +95,8 @@
             <Spinner
                 android:id="@+id/spGender"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
+                android:layout_height="40dip"
+                android:layout_marginStart="10dip"
                 android:layout_marginTop="6dip"
                 android:layout_toRightOf="@id/txtGender"
                 android:background="@drawable/_edit_text"
@@ -110,9 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rlGender"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="6dp"
+            android:layout_marginTop="60dip"
+            android:paddingHorizontal="10dip"
+            android:paddingVertical="6dip"
             android:text="@string/notify_me_on"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -131,7 +131,7 @@
             android:background="@drawable/_edit_text"
             android:clickable="false"
             android:drawableStart="@drawable/ic_calendar"
-            android:drawablePadding="3dp"
+            android:drawablePadding="3dip"
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="true"
@@ -142,6 +142,7 @@
             android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+
         <EditText
             android:id="@+id/etNotifyTime"
             android:layout_width="match_parent"
@@ -155,7 +156,7 @@
             android:background="@drawable/_edit_text"
             android:clickable="false"
             android:drawableStart="@drawable/ic_baseline_alarm_24"
-            android:drawablePadding="3dp"
+            android:drawablePadding="3dip"
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="true"
