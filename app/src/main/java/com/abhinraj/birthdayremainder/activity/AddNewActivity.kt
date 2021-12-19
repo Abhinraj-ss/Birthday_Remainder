@@ -302,18 +302,24 @@ class AddNewActivity : AppCompatActivity() {
         return true;
     }
 
-    private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String,noOfmillis:Long,id:Int):Boolean{
+    private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String,noOfmillis:Long):Boolean{
         val noOfDays =noOfmillis.toFloat() / (86400000)
+        val args = Bundle()
+        args.putString("name",name)
+        args.putInt("age",age)
+        args.putString("gender",gender)
+        args.putInt("days",noOfDays.toInt())
         val intent = Intent(this.applicationContext, NotificationReceiver::class.java).apply{
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("name",name)
+            putExtra("data",args)
+            /*putExtra("name",name)
             putExtra("age",age)
             putExtra("gender",gender)
-            putExtra("days",noOfDays.toInt())
+            putExtra("days",noOfDays.toInt())*/
         }
         System.out.println("${name} ${age} ${gender} ${noOfDays}")
 
-        val pendingIntent = getBroadcast(context.applicationContext, id, intent, 0)
+        val pendingIntent = getBroadcast(context.applicationContext, 0, intent, 0)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

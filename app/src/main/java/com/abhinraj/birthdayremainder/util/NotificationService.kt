@@ -2,33 +2,33 @@ package com.abhinraj.birthdayremainder.util
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
+import android.app.Service
 import android.content.Intent
-import android.os.Bundle
+import android.os.IBinder
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.MainActivity
 
+class NotificationService: Service() {
+    override fun onBind(p0: Intent?): IBinder? {
+        TODO("Not yet implemented")
+        return null
+    }
 
 
+    override fun onCreate() {
+    }
 
-class NotificationReceiver : BroadcastReceiver() {
-    @SuppressLint("WrongConstant", "UnsafeProtectedBroadcastReceiver", "ResourceAsColor")
-    override fun onReceive(context: Context?, intent: Intent) {
-        val args:Bundle= intent.getBundleExtra("data")
-        val notification = Intent(context, NotificationService::class.java).apply{
-            putExtra("data",args)
-        }
-        context!!.startService(notification)
-        /*
-val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)}"
-        val name = intent.getStringExtra("name")
-        val age = intent.getIntExtra("age",0)
-        val gender = intent.getStringExtra("gender")
-        val noOfDays= intent.getIntExtra("days", 0)
+    @SuppressLint("WrongConstant")
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        val channelId = "${this.packageName}-${this.getString(R.string.app_name)}"
+        val bundle = intent.getBundleExtra("data")
+        val name = bundle!!.getString("name")
+        val age = bundle.getInt("age",0)
+        val gender = bundle.getString("gender")
+        val noOfDays= bundle.getInt("days", 0)
         System.out.println("${name} ${age} ${gender} ${noOfDays}")
         val flags = intent.flags
         var pronoun =""
@@ -39,7 +39,7 @@ val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)
         }else if(gender=="Prefer not to say"){
             pronoun ="their"
         }
-        val notificationBuilder =NotificationCompat.Builder(context, channelId).apply {
+        val notificationBuilder = NotificationCompat.Builder(this, channelId).apply {
             setSmallIcon(R.drawable.ic_baseline_cake_24)
             setContentTitle("${name} is going to be ${age+1} in next ${noOfDays} days.")
             setContentText("message")
@@ -50,14 +50,17 @@ val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)
             setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
             setContentIntent(
                 PendingIntent.getActivity(
-                    context, // Context from onReceive method.
+                    this@NotificationService, // Context from onReceive method.
                     0,
-                    Intent(context, MainActivity::class.java), // Activity you want to launch onClick.
+                    Intent(this@NotificationService, MainActivity::class.java), // Activity you want to launch onClick.
                     flags
                 ))
         }
-            val notificationManager = NotificationManagerCompat.from(context)
-            notificationManager.notify(1001, notificationBuilder.build())
-*/
+        val notificationManager = NotificationManagerCompat.from(this)
+        notificationManager.notify(1001, notificationBuilder.build())
+        return START_STICKY
     }
+
+
+
 }
