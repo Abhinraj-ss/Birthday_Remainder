@@ -57,7 +57,6 @@ class AddNewActivity : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
     @RequiresApi(Build.VERSION_CODES.O)
-    val sd:DateTimeFormatter= ofPattern("dd/MM/yyyy HH:mm")
     val currentDate = sdf.format(Date())
     var isAllFieldsChecked : Boolean = false
 
@@ -87,6 +86,7 @@ class AddNewActivity : AppCompatActivity() {
         etNotifyTime = findViewById(R.id.etNotifyTime)
         btnAdd=findViewById(R.id.btnAdd)
 
+
         NotificationHelper.createNotificationChannel(
             this,
             NotificationManagerCompat.IMPORTANCE_HIGH,
@@ -94,6 +94,9 @@ class AddNewActivity : AppCompatActivity() {
             getString(R.string.app_name),
             "App notification channel."
         )
+
+
+
         etDob.setOnClickListener(View.OnClickListener {
 
             this.currentFocus?.let { view ->
@@ -182,12 +185,22 @@ class AddNewActivity : AppCompatActivity() {
                 val dobList = dob.split("/"," ",":").toList()
                 val currentList = currentDate.split("/"," ",":").toList()
                 val notifyList = notify.split("/"," ",":").toList()
+
+
                 date1.clear()
                 date1.set(notifyList[2].toInt(),notifyList[1].toInt(),notifyList[0].toInt())
                 date2.clear()
                 date2.set(currentList[2].toInt(),dobList[1].toInt(),dobList[0].toInt())
+                if(date1>date2){
+                    date2.clear()
+                    date2.set(currentList[2].toInt()+1,dobList[1].toInt(),dobList[0].toInt())
+                }
                 val diff = date2.timeInMillis - date1.timeInMillis
                 System.out.println(diff)
+
+
+
+
                 val diffList= arrayListOf<Int>()
                 for (i in 0..5){
                     diffList.add(currentList[i].toInt() -dobList[i].toInt())
@@ -240,20 +253,25 @@ class AddNewActivity : AppCompatActivity() {
                     "Alarm Triggered",
                     Toast.LENGTH_LONG).show()
 
-                sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString(),diff.toInt())
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                if(sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString(),diff.toLong(),backgroundList.size)){
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
 
         }
     }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
       val intent = Intent(this, MainActivity::class.java)
       startActivity(intent)
       return true
     }
+
+
     private fun checkAllFields():Boolean {
         if (etName.length() == 0) {
             etName.setError("Specify the Name")
@@ -283,8 +301,9 @@ class AddNewActivity : AppCompatActivity() {
         // after all validation return true.
         return true;
     }
-    private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String,noOfmillis:Int){
-        val noOfDays =noOfmillis.toFloat() / (24 * 60 * 60 * 1000)
+
+    private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String,noOfmillis:Long,id:Int):Boolean{
+        val noOfDays =noOfmillis.toFloat() / (86400000)
         val intent = Intent(this.applicationContext, NotificationReceiver::class.java).apply{
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("name",name)
@@ -294,7 +313,7 @@ class AddNewActivity : AppCompatActivity() {
         }
         System.out.println("${name} ${age} ${gender} ${noOfDays}")
 
-        val pendingIntent = getBroadcast(context.applicationContext, 0, intent, 0)
+        val pendingIntent = getBroadcast(context.applicationContext, id, intent, 0)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -303,7 +322,7 @@ class AddNewActivity : AppCompatActivity() {
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
 
-
+        return true
     }
 }
 

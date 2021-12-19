@@ -199,9 +199,11 @@ class HomeFragment : Fragment() {
 
             private val db = Room.databaseBuilder(context, BirthdayDatabase::class.java, "bday-db").build()
 
-            override fun doInBackground(vararg params: Void?): List<BirthdayEntity> {
 
-                return db.birthdayDao().getAllBirthdays()
+            override fun doInBackground(vararg params: Void?): List<BirthdayEntity> {
+                val allBirthdays:List<BirthdayEntity> =db.birthdayDao().getAllBirthdays()
+                db.close()
+                return  allBirthdays
             }
 
         }

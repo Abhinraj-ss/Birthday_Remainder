@@ -31,7 +31,6 @@ object NotificationHelper {
             channel.description = description
             channel.setShowBadge(showBadge)
             channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-
             // 3
             val notificationManager = context.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)

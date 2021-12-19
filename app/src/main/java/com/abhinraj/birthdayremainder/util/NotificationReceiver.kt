@@ -11,16 +11,19 @@ import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.MainActivity
 
+
+
+
 class NotificationReceiver : BroadcastReceiver() {
-    @SuppressLint("WrongConstant", "UnsafeProtectedBroadcastReceiver")
-    override fun onReceive(context: Context?, intent: Intent?) {
-        val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)}"
-        val name = intent?.getStringExtra("name")
-        val age = intent?.getIntExtra("age",0)
-        val gender = intent?.getStringExtra("gender")
-        val noOfDays= intent?.getIntExtra("days", 0)
+    @SuppressLint("WrongConstant", "UnsafeProtectedBroadcastReceiver", "ResourceAsColor")
+    override fun onReceive(context: Context?, intent: Intent) {
+val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)}"
+        val name = intent.getStringExtra("name")
+        val age = intent.getIntExtra("age",0)
+        val gender = intent.getStringExtra("gender")
+        val noOfDays= intent.getIntExtra("days", 0)
         System.out.println("${name} ${age} ${gender} ${noOfDays}")
-        val s = intent?.flags
+        val flags = intent.flags
         var pronoun =""
         if (gender=="Male"){
             pronoun="his"
@@ -31,21 +34,19 @@ class NotificationReceiver : BroadcastReceiver() {
         }
         val notificationBuilder =NotificationCompat.Builder(context, channelId).apply {
             setSmallIcon(R.drawable.ic_baseline_cake_24)
-            if (age != null) {
-                setContentTitle("${name} is going to be ${age+1} in next ${noOfDays} days.")
-            }
+            setContentTitle("${name} is going to be ${age+1} in next ${noOfDays} days.")
             setContentText("message")
             setStyle(NotificationCompat.BigTextStyle().bigText("Make ${pronoun} birthday memorable."))
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
-            setOnlyAlertOnce(true)
+            color = NotificationCompat.COLOR_DEFAULT
             setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
             setContentIntent(
                 PendingIntent.getActivity(
                     context, // Context from onReceive method.
                     0,
                     Intent(context, MainActivity::class.java), // Activity you want to launch onClick.
-                    s!!
+                    flags
                 ))
         }
             val notificationManager = NotificationManagerCompat.from(context)
