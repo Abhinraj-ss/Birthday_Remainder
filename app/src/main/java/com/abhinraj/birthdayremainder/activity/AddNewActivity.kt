@@ -253,7 +253,7 @@ class AddNewActivity : AppCompatActivity() {
                     "Alarm Triggered",
                     Toast.LENGTH_LONG).show()
 
-                if(sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString(),diff.toLong(),backgroundList.size)){
+                if(sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString(),diff.toLong())){
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
