@@ -1,8 +1,9 @@
 package com.abhinraj.birthdayremainder.activity
 
+
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.ui.home.HomeFragment
+import com.abhinraj.birthdayremainder.util.NotificationService
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+
+        val extras = getIntent().getExtras()
+        if(extras?.getString("clear")=="clear"){
+            dismissForgroundService(this)
+        }
+
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddNewActivity::class.java)
@@ -39,8 +47,6 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.nav_home, R.id.nav_calendar, R.id.nav_slideshow
         ), drawerLayout)
@@ -94,5 +100,11 @@ class MainActivity : AppCompatActivity() {
                 }*/
         }
     }
-
+    private fun dismissForgroundService(context: Context):Boolean{
+        val intent = Intent(context, NotificationService::class.java).apply{
+            putExtra("order","kill")
+        }
+        context.startService(intent)
+        return true
+    }
 }

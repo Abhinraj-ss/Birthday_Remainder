@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.provider.Settings.System.getString
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -19,11 +20,19 @@ import com.abhinraj.birthdayremainder.activity.MainActivity
 class NotificationReceiver : BroadcastReceiver() {
     @SuppressLint("WrongConstant", "UnsafeProtectedBroadcastReceiver", "ResourceAsColor")
     override fun onReceive(context: Context, intent: Intent) {
-        val args:Bundle= intent.getBundleExtra("data")
-        val notification = Intent(context, NotificationService::class.java).apply{
-            putExtra("data",args)
+        val action = intent.action
+        if(action == "android.permission.RECEIVE_BOOT_COMPLETED"){
+            System.out.println("Device got restarted.")
         }
-        ContextCompat.startForegroundService(context,notification)
+        else{
+            val args:Bundle?= intent.extras?.getBundle("data")
+
+            val notification = Intent(context, NotificationService::class.java).apply{
+                putExtra("data",args)
+            }
+            ContextCompat.startForegroundService(context,notification)
+        }
+
         /*
 val channelId = "${context!!.packageName}-${context.getString(R.string.app_name)}"
         val name = intent.getStringExtra("name")

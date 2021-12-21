@@ -9,16 +9,21 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.AddNewActivity
+import com.abhinraj.birthdayremainder.activity.MainActivity
 import com.abhinraj.birthdayremainder.activity.SettingsActivity
 import com.abhinraj.birthdayremainder.database.BirthdayDatabase
 import com.abhinraj.birthdayremainder.database.BirthdayEntity
+import com.abhinraj.birthdayremainder.util.NotificationReceiver
+import com.abhinraj.birthdayremainder.util.NotificationService
 import com.abhinraj.birthdayremainder.util.Sorter
 import java.security.cert.PKIXRevocationChecker
 import java.text.SimpleDateFormat
@@ -50,7 +55,8 @@ class HomeFragment : Fragment() {
         list.add(ex)
         list.add(ex1)
 
-
+        //dismissForgroundService(activity as Context)
+        System.out.println("Cleared!!")
         val backgroundList = BirthdaysAsync(activity as Context).execute().get()
 
         for (i in backgroundList){
@@ -207,5 +213,12 @@ class HomeFragment : Fragment() {
             }
 
         }
+    private fun dismissForgroundService(context: Context):Boolean{
+        val intent = Intent(context, NotificationService::class.java).apply{
+            putExtra("order","kill")
+        }
+        context.startService(intent)
+        return true
+    }
 
 }

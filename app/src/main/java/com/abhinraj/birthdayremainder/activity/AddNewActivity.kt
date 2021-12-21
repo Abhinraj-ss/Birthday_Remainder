@@ -87,16 +87,6 @@ class AddNewActivity : AppCompatActivity() {
         btnAdd=findViewById(R.id.btnAdd)
 
 
-        NotificationHelper.createNotificationChannel(
-            this,
-            NotificationManagerCompat.IMPORTANCE_HIGH,
-            true,
-            getString(R.string.app_name),
-            "App notification channel."
-        )
-
-
-
         etDob.setOnClickListener(View.OnClickListener {
 
             this.currentFocus?.let { view ->
@@ -310,16 +300,12 @@ class AddNewActivity : AppCompatActivity() {
         args.putString("gender",gender)
         args.putInt("days",noOfDays.toInt())
         val intent = Intent(this.applicationContext, NotificationReceiver::class.java).apply{
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("data",args)
-            /*putExtra("name",name)
-            putExtra("age",age)
-            putExtra("gender",gender)
-            putExtra("days",noOfDays.toInt())*/
         }
         System.out.println("${name} ${age} ${gender} ${noOfDays}")
 
-        val pendingIntent = getBroadcast(context.applicationContext, 0, intent, 0)
+        val pendingIntent = getBroadcast(context.applicationContext, 0, intent, FLAG_UPDATE_CURRENT)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
