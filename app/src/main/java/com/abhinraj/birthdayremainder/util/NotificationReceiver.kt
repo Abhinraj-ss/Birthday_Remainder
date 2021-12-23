@@ -31,6 +31,8 @@ class NotificationReceiver : BroadcastReceiver() {
                 putExtra("data",args)
             }
             ContextCompat.startForegroundService(context,notification)
+            //context.startService(intent)
+
         }
 
         /*

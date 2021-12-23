@@ -6,9 +6,11 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
+import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
 import android.support.v4.media.session.PlaybackStateCompat
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.media.session.MediaButtonReceiver
@@ -16,6 +18,7 @@ import com.abhinraj.birthdayremainder.R
 import com.abhinraj.birthdayremainder.activity.MainActivity
 
 class NotificationService: Service() {
+
     override fun onBind(p0: Intent?): IBinder? {
         TODO("Not yet implemented")
         return null
@@ -35,11 +38,10 @@ class NotificationService: Service() {
     @SuppressLint("WrongConstant", "UnspecifiedImmutableFlag")
     override fun onStartCommand(intent: Intent, flag: Int, startId: Int): Int {
         val order = intent.getStringExtra("order")
-        if (order == "kill"){
+        if (order == "kill") {
             System.out.println("kill")
             stopForeground(true)
-        }
-        else {
+        } else {
             val channelId = "${this.packageName}-${this.getString(R.string.app_name)}"
             val bundle = intent.getBundleExtra("data")
             val name = bundle!!.getString("name")
@@ -53,7 +55,7 @@ class NotificationService: Service() {
                 MainActivity::class.java
             ).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                putExtra("clear","clear")
+                putExtra("clear", "clear")
 
             }
             var pronoun = ""
@@ -78,8 +80,8 @@ class NotificationService: Service() {
                 setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 setContentIntent(
                     PendingIntent.getActivity(
-                        this@NotificationService, // Context from onReceive method.
-                        0,notifyIntent, // Activity you want to launch onClick.
+                        this@NotificationService,
+                        0, notifyIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT
                     )
                 )
@@ -90,7 +92,7 @@ class NotificationService: Service() {
         }
         return START_STICKY
     }
-
-
-
 }
+
+
+

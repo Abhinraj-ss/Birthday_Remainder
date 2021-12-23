@@ -3,15 +3,14 @@ package com.abhinraj.birthdayremainder.activity
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
 import android.app.PendingIntent.*
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -25,15 +24,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
-import android.view.View.OnTouchListener
-import androidx.core.app.NotificationManagerCompat
 import com.abhinraj.birthdayremainder.R
-import com.abhinraj.birthdayremainder.util.NotificationHelper
 import com.abhinraj.birthdayremainder.util.NotificationReceiver
 import android.widget.TextView
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ofPattern
 
 
 class AddNewActivity : AppCompatActivity() {
@@ -45,8 +38,8 @@ class AddNewActivity : AppCompatActivity() {
     lateinit var gender: Spinner
     lateinit var etNotify: EditText
     lateinit var etNotifyTime: EditText
+    lateinit var backgroundList:List<BirthdayEntity>
 
-    lateinit var btnAdd:Button
     var age by Delegates.notNull<Int>()
     private var day by Delegates.notNull<Int>()
     var month by Delegates.notNull<Int>()
@@ -70,7 +63,7 @@ class AddNewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_new)
 
 
-        val backgroundList = HomeFragment.BirthdaysAsync(this).execute().get()
+        backgroundList = HomeFragment.BirthdaysAsync(this).execute().get()
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -84,7 +77,6 @@ class AddNewActivity : AppCompatActivity() {
         gender=findViewById(R.id.spGender)
         etNotify =findViewById(R.id.etNotify)
         etNotifyTime = findViewById(R.id.etNotifyTime)
-        btnAdd=findViewById(R.id.btnAdd)
 
 
         etDob.setOnClickListener(View.OnClickListener {
@@ -164,93 +156,6 @@ class AddNewActivity : AppCompatActivity() {
 
         }
 
-        btnAdd.setOnClickListener {
-            isAllFieldsChecked = checkAllFields()
-            if (isAllFieldsChecked){
-
-                val dob = etDob.getText().toString()+" 00:00:00"
-                val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
-                val date1 = Calendar.getInstance()
-                val date2 = Calendar.getInstance()
-                val dobList = dob.split("/"," ",":").toList()
-                val currentList = currentDate.split("/"," ",":").toList()
-                val notifyList = notify.split("/"," ",":").toList()
-
-
-                date1.clear()
-                date1.set(notifyList[2].toInt(),notifyList[1].toInt(),notifyList[0].toInt())
-                date2.clear()
-                date2.set(currentList[2].toInt(),dobList[1].toInt(),dobList[0].toInt())
-                if(date1>date2){
-                    date2.clear()
-                    date2.set(currentList[2].toInt()+1,dobList[1].toInt(),dobList[0].toInt())
-                }
-                val diff = date2.timeInMillis - date1.timeInMillis
-                System.out.println(diff)
-
-
-
-
-                val diffList= arrayListOf<Int>()
-                for (i in 0..5){
-                    diffList.add(currentList[i].toInt() -dobList[i].toInt())
-                }
-                age = diffList[2]
-
-                if (diffList[1]==0){
-                    if (diffList[0]==0){
-                        if (diffList[3]==0){
-                            if (diffList[4]==0){
-                                if (diffList[5]==0&& month==12 && day==31){
-                                    age+=1
-                                }
-                                else if(diffList[5]<0){
-                                    age-=1
-                                }
-                            }
-                            else if(diffList[4]<0){
-                                age-=1
-                            }
-                        }
-                        else if(diffList[3]<0){
-                            age-=1
-                        }
-                    }
-                    else if(diffList[0]<0){
-                        age-=1
-                    }
-                }
-                else if(diffList[1]<0){
-                    age-=1
-                }
-
-                val birthdayEntity = BirthdayEntity(
-                    backgroundList.size,
-                    etName.getText().toString(),
-                    dob,
-                    age,
-                    gender.getSelectedItem().toString(),
-                    notify
-                )
-                System.out.println(birthdayEntity)
-
-                if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute().get()) {
-                    val async =
-                        HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
-                    val result = async.get()
-                }
-                Toast.makeText(this,
-                    "Alarm Triggered",
-                    Toast.LENGTH_LONG).show()
-
-                if(sendAlarmNotification(this,etName.getText().toString(),age,gender.getSelectedItem().toString(),diff.toLong())){
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-
-        }
     }
 
 
@@ -292,6 +197,95 @@ class AddNewActivity : AppCompatActivity() {
         return true;
     }
 
+
+
+    fun addProfile(view: android.view.View) {
+        isAllFieldsChecked = checkAllFields()
+        if (isAllFieldsChecked){
+
+            val dob = etDob.getText().toString()+" 00:00:00"
+            val notify = etNotify.getText().toString()+" "+ etNotifyTime.getText().toString()
+            val date1 = Calendar.getInstance()
+            val date2 = Calendar.getInstance()
+            val dobList = dob.split("/"," ",":").toList()
+            val currentList = currentDate.split("/"," ",":").toList()
+            val notifyList = notify.split("/"," ",":").toList()
+
+
+            date1.clear()
+            date1.set(notifyList[2].toInt(),notifyList[1].toInt(),notifyList[0].toInt())
+            date2.clear()
+            date2.set(currentList[2].toInt(),dobList[1].toInt(),dobList[0].toInt())
+            if(date1>date2){
+                date2.clear()
+                date2.set(currentList[2].toInt()+1,dobList[1].toInt(),dobList[0].toInt())
+            }
+            val diff = date2.timeInMillis - date1.timeInMillis
+            System.out.println(diff)
+
+
+
+
+            val diffList= arrayListOf<Int>()
+            for (i in 0..5){
+                diffList.add(currentList[i].toInt() -dobList[i].toInt())
+            }
+            age = diffList[2]
+
+            if (diffList[1]==0){
+                if (diffList[0]==0){
+                    if (diffList[3]==0){
+                        if (diffList[4]==0){
+                            if (diffList[5]==0&& month==12 && day==31){
+                                age+=1
+                            }
+                            else if(diffList[5]<0){
+                                age-=1
+                            }
+                        }
+                        else if(diffList[4]<0){
+                            age-=1
+                        }
+                    }
+                    else if(diffList[3]<0){
+                        age-=1
+                    }
+                }
+                else if(diffList[0]<0){
+                    age-=1
+                }
+            }
+            else if(diffList[1]<0){
+                age-=1
+            }
+
+            val birthdayEntity = BirthdayEntity(
+                backgroundList.size,
+                etName.getText().toString(),
+                dob,
+                age,
+                gender.getSelectedItem().toString(),
+                notify
+            )
+            System.out.println(birthdayEntity)
+
+            if (!HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 1).execute().get()) {
+                val async =
+                    HomeRecyclerAdapter.DBAsyncTask(applicationContext, birthdayEntity, 2).execute()
+                val result = async.get()
+            }
+            Toast.makeText(view.context,
+                "Alarm Triggered",
+                Toast.LENGTH_LONG).show()
+
+            if(sendAlarmNotification(view.context,etName.getText().toString(),age,gender.getSelectedItem().toString(),diff.toLong())){
+                val intent = Intent(view.context, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
+
     private fun sendAlarmNotification(context: Context, name:String, age :Int, gender:String,noOfmillis:Long):Boolean{
         val noOfDays =noOfmillis.toFloat() / (86400000)
         val args = Bundle()
@@ -313,6 +307,9 @@ class AddNewActivity : AppCompatActivity() {
         val ten =  1000*20
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,currentime+ten,pendingIntent)
+
+
+
 
         return true
     }

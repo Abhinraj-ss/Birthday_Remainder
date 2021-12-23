@@ -55,8 +55,6 @@ class HomeFragment : Fragment() {
         list.add(ex)
         list.add(ex1)
 
-        //dismissForgroundService(activity as Context)
-        System.out.println("Cleared!!")
         val backgroundList = BirthdaysAsync(activity as Context).execute().get()
 
         for (i in backgroundList){
@@ -213,12 +211,6 @@ class HomeFragment : Fragment() {
             }
 
         }
-    private fun dismissForgroundService(context: Context):Boolean{
-        val intent = Intent(context, NotificationService::class.java).apply{
-            putExtra("order","kill")
-        }
-        context.startService(intent)
-        return true
-    }
+
 
 }
