@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var rlLoading: RelativeLayout
     private lateinit var recyclerHome: RecyclerView
+    private lateinit var rlNoProfile: RelativeLayout
     private lateinit var layoutManager: LinearLayoutManager
     private val list = arrayListOf<Birthdays>()
     private lateinit var recyclerAdapter: HomeRecyclerAdapter
@@ -52,8 +53,8 @@ class HomeFragment : Fragment() {
 
         val ex = Birthdays(1, "Abhin Raj", "06/11/2000"+" 00:00:00", 21,"Male",  "01/11/2022"+" 00:00:00")
         val ex1 = Birthdays(2, "Surabi Suresh", "06/11/2001"+" 00:00:00",20, "Female",  "01/11/2022"+" 00:00:00")
-        list.add(ex)
-        list.add(ex1)
+        //list.add(ex)
+        //list.add(ex1)
 
         val backgroundList = BirthdaysAsync(activity as Context).execute().get()
 
@@ -103,14 +104,15 @@ class HomeFragment : Fragment() {
 
         progressBar = root?.findViewById(R.id.progressBar) as ProgressBar
         rlLoading = root.findViewById(R.id.rlLoading) as RelativeLayout
-        /*rlLoading.visibility = View.VISIBLE
-        progressBar.visibility = View.INVISIBLE*/
+        rlNoProfile =root.findViewById(R.id.rlNoProfiles) as RelativeLayout
+        rlLoading.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
         if (backgroundList.isEmpty()) {
             rlLoading.visibility = View.GONE
-            rlLoading.visibility = View.GONE
-            progressBar.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            rlNoProfile.visibility = View.VISIBLE
+
         } else {
-            rlLoading.visibility = View.INVISIBLE
             rlLoading.visibility = View.GONE
             progressBar.visibility = View.GONE
             for (i in backgroundList) {
